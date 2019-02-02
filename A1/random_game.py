@@ -12,9 +12,8 @@ import random
 def rock_paper_scissors():
     """play rock paper scissors with the computer
     """
-
+    # creates a random integer between 0 and 2 and converts it to rock, paper, or scissors
     computer_guess = random.randint(0, 2)
-
     if computer_guess == 0:
         computer_guess = 'rock'
     elif computer_guess == 1:
@@ -22,10 +21,12 @@ def rock_paper_scissors():
     else:
         computer_guess = 'scissors'
 
+    # takes user input and normalizes it to lower case and with no white space
     user_guess = input("Enter either rock, paper, or scissors: ")
     user_guess = user_guess.strip()
     user_guess = user_guess.lower()
 
+    # prints whether you won, lost, or tied based on the possible outcomes available
     if not(user_guess == 'rock' or user_guess == 'paper' or user_guess == 'scissors'):
         print("you did not enter rock, paper, or scissors")
     elif user_guess == 'rock' and computer_guess == 'scissors':

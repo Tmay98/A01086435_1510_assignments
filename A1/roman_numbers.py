@@ -22,63 +22,64 @@ def convert_to_roman_numeral(positive_int):
     ''
     >>> convert_to_roman_numeral(10000)
     'MMMMMMMMMM'
+    >>> convert_to_roman_numeral(944)
+    'CMXLIV'
 
     """
     converted_number = ''
+
     if positive_int >= 1000:
-        converted_number = converted_number + 'M' + (convert_to_roman_numeral(positive_int - 1000))
-        return converted_number
+        converted_number = (positive_int // 1000) * 'M'
+        positive_int = positive_int % 1000
 
-    elif 900 <= positive_int < 1000:
-        converted_number = converted_number + 'CM' + (convert_to_roman_numeral(positive_int - 900))
-        return converted_number
+    if 900 <= positive_int < 1000:
+        converted_number = converted_number + 'CM'
+        positive_int -= 900
 
-    elif positive_int >= 500:
-        converted_number = converted_number + 'D' + (convert_to_roman_numeral(positive_int - 500))
-        return converted_number
+    if positive_int >= 500:
+        converted_number = converted_number + (positive_int // 500) * 'D'
+        positive_int = positive_int % 500
 
-    elif 400 <= positive_int < 500:
-        converted_number = converted_number + 'CD' + (convert_to_roman_numeral(positive_int - 400))
-        return converted_number
+    if 400 <= positive_int < 500:
+        converted_number = converted_number + 'CD'
+        positive_int -= 400
 
-    elif positive_int >= 100:
-        converted_number = converted_number + 'C' + (convert_to_roman_numeral(positive_int - 100))
-        return converted_number
+    if positive_int >= 100:
+        converted_number = converted_number + (positive_int // 100) * 'C'
+        positive_int = positive_int % 100
 
-    elif 90 <= positive_int < 100:
-        converted_number = converted_number + 'XC' + (convert_to_roman_numeral(positive_int - 90))
-        return converted_number
+    if 90 <= positive_int < 100:
+        converted_number = converted_number + 'XC'
+        positive_int -= 90
 
-    elif positive_int >= 50:
-        converted_number = converted_number + 'L' + (convert_to_roman_numeral(positive_int - 50))
-        return converted_number
+    if positive_int >= 50:
+        converted_number = converted_number +(positive_int // 50) * 'L'
+        positive_int = positive_int % 50
 
-    elif 40 <= positive_int < 50:
-        converted_number = converted_number + 'XL' + (convert_to_roman_numeral(positive_int - 40))
-        return converted_number
+    if 40 <= positive_int < 50:
+        converted_number = converted_number + 'XL'
+        positive_int -= 40
 
-    elif positive_int >= 10:
-        converted_number = converted_number + 'X' + (convert_to_roman_numeral(positive_int - 10))
-        return converted_number
+    if positive_int >= 10:
+        converted_number = converted_number + (positive_int // 10) * 'X'
+        positive_int = positive_int % 10
 
-    elif positive_int == 9:
-        converted_number = converted_number + 'IX' + (convert_to_roman_numeral(positive_int - 9))
-        return converted_number
+    if positive_int == 9:
+        converted_number = converted_number + 'IX'
+        positive_int -= 9
 
-    elif positive_int >= 5:
-        converted_number = converted_number + 'V' + (convert_to_roman_numeral(positive_int - 5))
-        return converted_number
+    if positive_int >= 5:
+        converted_number = converted_number + 'V'
+        positive_int = positive_int % 5
 
-    elif positive_int == 4:
-        return 'IV'
-    elif positive_int == 3:
-        return 'III'
-    elif positive_int == 2:
-        return 'II'
-    elif positive_int == 1:
-        return 'I'
-    elif positive_int == 0:
-        return ''
+    if positive_int == 4:
+        converted_number = converted_number + 'IV'
+        positive_int -= 4
+
+    if positive_int > 0:
+        converted_number = converted_number + (positive_int * 'I')
+
+    return converted_number
 
 
 def main():
