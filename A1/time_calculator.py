@@ -28,7 +28,9 @@ def time_calculator(entered_seconds):
     minutes = 0
     seconds = 0
     time_list = ['days', days, 'hours', hours, 'minutes', minutes, 'seconds', seconds]
-
+    if entered_seconds < 0:
+        print('You did not enter a positive integer')
+        return
     # calculates amount of days and subtracts from seconds
     if entered_seconds >= 86400:
         time_list[1] = entered_seconds // 86400
