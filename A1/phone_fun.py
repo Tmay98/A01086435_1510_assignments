@@ -16,26 +16,22 @@ def number_translator():
 
     """
     entered_phone_number = input("Enter a phone number in the format XXX-XXX-XXXX: ")
-    converted_number = []
+    converted_number = ''
 
-    # converts the 12 characters in the entered number one by one and adds them to a list
-    converted_number.append(letter_converted_to_number(entered_phone_number[0]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[1]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[2]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[3]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[4]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[5]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[6]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[7]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[8]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[9]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[10]))
-    converted_number.append(letter_converted_to_number(entered_phone_number[11]))
-
-    # converts the converted number list to a string and returns it
-    converted_number_string = ''
-    converted_number_string = converted_number_string.join(converted_number)
-    return converted_number_string
+    # converts the 12 characters in the entered number one by one to numbers and returns the string
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[0]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[1]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[2]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[3]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[4]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[5]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[6]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[7]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[8]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[9]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[10]))
+    converted_number = converted_number + (letter_converted_to_number(entered_phone_number[11]))
+    return converted_number
 
 
 def letter_converted_to_number(number_string):
@@ -77,7 +73,6 @@ def letter_converted_to_number(number_string):
 
 def main():
     doctest.testmod()
-
 
 if __name__ == '__main__':
     main()

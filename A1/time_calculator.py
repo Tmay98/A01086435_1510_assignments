@@ -18,8 +18,8 @@ def time_calculator(entered_seconds):
 
     >>> time_calculator(92566)
     ['days', 1, 'hours', 1, 'minutes', 42, 'seconds', 46]
-    >>> time_calculator(86400)
-    ['days', 1, 'hours', 0, 'minutes', 0, 'seconds', 0]
+    >>> time_calculator(-5)
+    You did not enter a positive integer
     >>> time_calculator(0)
     ['days', 0, 'hours', 0, 'minutes', 0, 'seconds', 0]
     """

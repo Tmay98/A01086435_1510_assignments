@@ -16,18 +16,28 @@ def convert_to_roman_numeral(positive_int):
     PRE-CONDITION positive_int must be a positive integer
     RETURN a string with the roman numeral equivalent
 
-    >>> convert_to_roman_numeral(1456)
-    'MCDLVI'
     >>> convert_to_roman_numeral(0)
     ''
     >>> convert_to_roman_numeral(10000)
     'MMMMMMMMMM'
     >>> convert_to_roman_numeral(944)
     'CMXLIV'
+    >>> convert_to_roman_numeral(-5)
+    You did not enter a number between 0 and 10 000
+    >>> convert_to_roman_numeral('efgerg')
+    you did not enter an integer
 
     """
     converted_number = ''
-
+    # checks if input is an integer or not
+    if not isinstance(positive_int, int):
+        print('you did not enter an integer')
+        return
+    # checks if input is in range
+    if positive_int > 10000 or positive_int < 0:
+        print('You did not enter a number between 0 and 10 000')
+        return
+    # if input is an integer in the correct range calculates the roman numeral
     if positive_int >= 1000:
         converted_number = (positive_int // 1000) * 'M'
         positive_int = positive_int % 1000
