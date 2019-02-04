@@ -9,3 +9,6 @@ class TestTime_calculator(TestCase):
     def test_wrong_input(self):
         self.assertEqual(None, time_calculator.time_calculator(-5))
 
+    def test_lower_bound(self):
+        self.assertEqual(['days', 0, 'hours', 0, 'minutes', 0, 'seconds', 0], time_calculator.time_calculator(0))
+
