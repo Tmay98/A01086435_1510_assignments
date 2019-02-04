@@ -74,5 +74,6 @@ def letter_converted_to_number(number_string):
 def main():
     doctest.testmod()
 
+
 if __name__ == '__main__':
     main()
