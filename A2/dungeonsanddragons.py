@@ -33,7 +33,7 @@ def choose_inventory(inventory, selection):
     """chooses a certain amount of items randomly from a given list
 
     PARAM inventory a list
-    PARAM selectino an int
+    PARAM selection an int
     PRECONDITION inventory must be a list
     PRECONDITION selection must be a positive int
     POSTCONDITION creates a new list of random items from given inventory
@@ -58,12 +58,12 @@ def choose_inventory(inventory, selection):
 
 
 def create_character(syllables):
-    """creates a list with character name and 6 core attributes
+    """creates a dictionary with character name and 6 core attributes
 
-    PARAM name_length an int
-    PRECONDITION name_length must be a positive int
-    POSTCONDITION a list with a name of specified length and 6 attributes is created
-    RETURN list with name and 6 attributes
+    PARAM syllables an int
+    PRECONDITION syllables must be a positive int
+    POSTCONDITION a correctly formatted character dictionary
+    RETURN correctly formatted character dictionary
     """
     # return None if input is not a positive integer
     if (not isinstance(syllables, int)) or (syllables <= 0):
@@ -103,16 +103,6 @@ def print_character(character):
     PARAM character a dictionary
     PRECONDITION character must be a dictionary
     POSTCONDITION character is printed to console
-
-    >>> print_character(['Tommy', ['Strength', 8], ['Dexterity', 8], ['Constitution', 11],\
-                        ['Intelligence', 13], ['Wisdom', 7], ['Charisma', 11]])
-    Tommy
-    ['Strength', 8]
-    ['Dexterity', 8]
-    ['Constitution', 11]
-    ['Intelligence', 13]
-    ['Wisdom', 7]
-    ['Charisma', 11]
     """
     for attribute, value in character.items():
         print(attribute, value)
@@ -120,8 +110,11 @@ def print_character(character):
 
 def generate_name(syllables):
     """ generates a name
+
     PARAM syllables an int
     PRECONDITION syllables is a positive integer
+    POSTCONDITION a name is created with the entered amount of syllables
+    RETURN the name created
     """
     name = ''
     for i in range(syllables):
@@ -130,23 +123,39 @@ def generate_name(syllables):
 
 
 def generate_vowel():
+    """ generate a vowel
+
+    RETURN a string with 1 vowel
+    """
     vowels = 'aeiouy'
     random_vowel = random.choice(vowels)
     return random_vowel
 
 
 def generate_consonant():
+    """ generate a consonant
+
+    RETURN a string with 1 consonant
+    """
     consonants = 'bcdfghjklmnpqrstvwxz'
     random_consonant = random.choice(consonants)
     return random_consonant
 
 
 def generate_syllable():
+    """ generate a syllable with 1 consonant and 1 vowel
+
+    RETURN a string with a syllable
+    """
     random_syllable = generate_consonant() + generate_vowel()
     return random_syllable
 
 
 def class_selection():
+    """ asks user to select a class from a list of choices
+
+    RETURN a string with the inputted class in lowercase
+    """
     class_choice = input('Type in the class you want to select from this list:'
                          '\nbarbarian\nbard\ncleric\ndruid\nmonk\nrogue\nwarlock\nfighter\npaladin\nranger'
                          '\nbloodhunter\nwizard\nsorcerer\n')
@@ -154,13 +163,20 @@ def class_selection():
 
 
 def combat_round(opponent_1, opponent_2):
-    """plays a round of combat
+    """ Plays a round of combat between 2 characters
+
+    PARAM opponent_1 a correctly formatted dictionary
+    PARAM opponent_2 a correctly formatted dictionary
+    PRECONDITION opponent_1 is a correctly formatted dictionary
+    PRECONDITION opponent_2 is a correctly formatted dictionary
+    POSTCONDITION a round of combat is played
     """
     attacker = None
     defender = None
     successful_strike = None
     damage = None
 
+    # calculates who the attacker and who the defender is based on die roll
     while attacker is None:
         opponent_1_attack_roll = roll_die(1, 20)
         opponent_2_attack_roll = roll_die(1, 20)
@@ -174,6 +190,7 @@ def combat_round(opponent_1, opponent_2):
     if roll_die(1, 20) > defender['dexterity']:
         successful_strike = True
 
+    # if attack is successful calculates damage based on attackers class
     if successful_strike is True:
         if attacker['class'] == 'barbarian':
             damage = roll_die(1, 12)
@@ -187,11 +204,15 @@ def combat_round(opponent_1, opponent_2):
         elif attacker['class'] in ('wizard', 'sorcerer'):
             damage = roll_die(1, 6)
             defender['HitPoints'] -= damage
+
+        # prints defenders hp and whether he died or not
         if defender['HitPoints'] < 1:
             print(attacker['name'], 'hit', defender['name'], 'for', damage, 'damage\n', defender['name'], 'died')
         else:
             print(attacker['name'], 'hit', defender['name'], 'for', damage, 'damage\n', defender['name'], 'has',
                   defender['HitPoints'], 'hitpoints left')
+
+    # attack was unsuccessful prints did not hit
     else:
         print(attacker['name'], 'did not hit', defender['name'])
 
