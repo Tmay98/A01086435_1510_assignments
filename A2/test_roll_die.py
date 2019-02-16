@@ -1,6 +1,7 @@
 from unittest import TestCase
 from dungeonsanddragons import roll_die
 
+
 class TestRoll_die(TestCase):
     def test_upper_bound(self):
         for i in range(100):

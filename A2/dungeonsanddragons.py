@@ -214,7 +214,7 @@ def attack_player(attacker, defender):
             print(attacker['name'], 'hit', defender['name'], 'for', damage, 'damage\n', defender['name'], 'died')
         else:
             print(attacker['name'], 'hit', defender['name'], 'for', damage, 'damage\n', defender['name'], 'has',
-                  defender['HitPoints'], 'hitpoints left')
+                  defender['HitPoints'], 'HitPoints left')
 
     # Attack was unsuccessful prints did not hit
     else:

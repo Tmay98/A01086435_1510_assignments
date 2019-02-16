@@ -20,3 +20,4 @@ class TestCombat_round(TestCase):
     def test_incorrect_character_input(self):
         with self.assertRaises(TypeError):
             dungeonsanddragons.combat_round(5, 3)
+
