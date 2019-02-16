@@ -198,7 +198,7 @@ def combat_round(opponent_1, opponent_2):
 
 
 def attack_player(attacker, defender):
-    # rolls die to check if attacker hits the defender
+    # Rolls die to check if attacker hits the defender
     if roll_die(1, 20) > defender['dexterity']:
         successful_strike = True
     else:
