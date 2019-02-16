@@ -1,4 +1,4 @@
-"""dungeonsanddragons module
+"""dungeons and dragons module
 """
 
 # Tommy May
@@ -23,7 +23,7 @@ def roll_die(number_of_rolls, number_of_sides):
         return 0
 
     random_total = 0
-    # calculate sum of rolled dice
+    # Calculate sum of rolled dice
     for i in range(number_of_rolls):
         random_total += random.randint(1, number_of_sides)
     return random_total
@@ -40,7 +40,7 @@ def choose_inventory(inventory, selection):
     RETURN list with random items from inventory
 
     """
-    # checking errors in input
+    # Checking errors in input
     if (not inventory) and (selection == 0):
         return []
     elif selection < 0:
@@ -48,10 +48,10 @@ def choose_inventory(inventory, selection):
     elif selection > len(inventory):
         print("you selected too many items")
         return None
-    # return a copy of the list
+    # Return a copy of the list
     elif selection == len(inventory):
         return copy.deepcopy(inventory)
-    # return a sorted random list of items from inventory
+    # Return a sorted random list of items from inventory
     else:
         sorted_inventory = sorted(random.sample(inventory, selection))
         return sorted_inventory
@@ -65,29 +65,24 @@ def create_character(syllables):
     POSTCONDITION a correctly formatted character dictionary
     RETURN correctly formatted character dictionary
     """
-    # return None if input is not a positive integer
+    # Return None if input is not a positive integer
     if (not isinstance(syllables, int)) or (syllables <= 0):
         print('You did not enter a positive integer')
         return None
 
+    # Creates initial character dictionary
     character_dict = {'name': '', 'class': '', 'HitPoints': 0, 'strength': '', 'dexterity': '', 'constitution': '', 'intelligence': '',
                       'wisdom': '', 'charisma': '', 'XP': 0, 'items': ''}
 
-    # generate name and class for character_dict
+    # Generate name and class for character_dict
     character_dict['name'] = generate_name(syllables)
     character_dict['class'] = class_selection()
 
-    # calculate hitpoints based on class chosen
-    if character_dict['class'] == 'barbarian':
-        character_dict['HitPoints'] = roll_die(1, 12)
-    elif character_dict['class'] in ('bard', 'cleric', 'druid', 'monk', 'rogue', 'warlock'):
-        character_dict['HitPoints'] = roll_die(1, 8)
-    elif character_dict['class'] in ('fighter', 'paladin', 'ranger', 'bloodhunter'):
-        character_dict['HitPoints'] = roll_die(1, 10)
-    elif character_dict['class'] in ('wizard', 'sorcerer'):
-        character_dict['HitPoints'] = roll_die(1, 6)
+    # Calculate hitpoints based on class chosen
+    character_dict['HitPoints'] = calculate_hit_die(character_dict['class'])
 
-    # roll 3 6-sided dice for each attribute and add it to character_dict
+
+    # Roll 3 6-sided dice for each attribute and add it to character_dict
     character_dict['strength'] = roll_die(3, 6)
     character_dict['dexterity'] = roll_die(3, 6)
     character_dict['constitution'] = roll_die(3, 6)
@@ -156,9 +151,19 @@ def class_selection():
 
     RETURN a string with the inputted class in lowercase
     """
-    class_choice = input('Type in the class you want to select from this list:'
-                         '\nbarbarian\nbard\ncleric\ndruid\nmonk\nrogue\nwarlock\nfighter\npaladin\nranger'
-                         '\nbloodhunter\nwizard\nsorcerer\n')
+    class_choice = ''
+    class_list = ['barbarian', 'bard', 'cleric', 'druid', 'monk', 'rogue', 'warlock', 'fighter', 'paladin',
+                  'ranger', 'bloodhunter', 'wizard', 'sorcerer']
+
+    # Loop through class input until a correct class is entered
+    while class_choice.lower() not in class_list:
+        class_choice = input('Type in the class you want to select from this list:'
+                             '\nbarbarian\nbard\ncleric\ndruid\nmonk\nrogue\nwarlock\nfighter\npaladin\nranger'
+                             '\nbloodhunter\nwizard\nsorcerer\n')
+
+        if class_choice.lower() not in class_list:
+            print('You did not enter a correct class, try again')
+
     return class_choice.lower()
 
 
@@ -171,50 +176,60 @@ def combat_round(opponent_1, opponent_2):
     PRECONDITION opponent_2 is a correctly formatted dictionary
     POSTCONDITION a round of combat is played
     """
-    attacker = None
-    defender = None
-    successful_strike = None
-    damage = None
+    attacker_1 = None
+    attacker_2 = None
 
-    # calculates who the attacker and who the defender is based on die roll
-    while attacker is None:
+    # Calculates who the attacker and who the defender is based on die roll until they aren't equal
+    while attacker_1 is None:
         opponent_1_attack_roll = roll_die(1, 20)
         opponent_2_attack_roll = roll_die(1, 20)
         if opponent_1_attack_roll > opponent_2_attack_roll:
-            attacker = opponent_1
-            defender = opponent_2
+            attacker_1 = opponent_1
+            attacker_2 = opponent_2
         elif opponent_2_attack_roll > opponent_1_attack_roll:
-            attacker = opponent_2
-            defender = opponent_1
+            attacker_1 = opponent_2
+            attacker_2 = opponent_1
 
+    # First attacker attacks second attacker
+    attack_player(attacker_1, attacker_2)
+    # If attacker 2 is not dead then attacker 2 attacks attacker 1
+    if attacker_2['HitPoints'] >= 1:
+        attack_player(attacker_2, attacker_1)
+
+
+def attack_player(attacker, defender):
+    # rolls die to check if attacker hits the defender
     if roll_die(1, 20) > defender['dexterity']:
         successful_strike = True
+    else:
+        successful_strike = False
 
-    # if attack is successful calculates damage based on attackers class
+    # If attack is successful calculates damage based on attackers class
     if successful_strike is True:
-        if attacker['class'] == 'barbarian':
-            damage = roll_die(1, 12)
-            defender['HitPoints'] -= damage
-        elif attacker['class'] in ('bard', 'cleric', 'druid', 'monk', 'rogue', 'warlock'):
-            damage = roll_die(1, 8)
-            defender['HitPoints'] -= damage
-        elif attacker['class'] in ('fighter', 'paladin', 'ranger', 'bloodhunter'):
-            damage = roll_die(1, 10)
-            defender['HitPoints'] -= damage
-        elif attacker['class'] in ('wizard', 'sorcerer'):
-            damage = roll_die(1, 6)
-            defender['HitPoints'] -= damage
+        damage = calculate_hit_die(attacker['class'])
+        defender['HitPoints'] -= damage
 
-        # prints defenders hp and whether he died or not
+        # Prints defenders hp and whether he died or not
         if defender['HitPoints'] < 1:
             print(attacker['name'], 'hit', defender['name'], 'for', damage, 'damage\n', defender['name'], 'died')
         else:
             print(attacker['name'], 'hit', defender['name'], 'for', damage, 'damage\n', defender['name'], 'has',
                   defender['HitPoints'], 'hitpoints left')
 
-    # attack was unsuccessful prints did not hit
+    # Attack was unsuccessful prints did not hit
     else:
         print(attacker['name'], 'did not hit', defender['name'])
+
+
+def calculate_hit_die(character_class):
+    if character_class == 'barbarian':
+        return roll_die(1, 12)
+    elif character_class in ('bard', 'cleric', 'druid', 'monk', 'rogue', 'warlock'):
+        return roll_die(1, 8)
+    elif character_class in ('fighter', 'paladin', 'ranger', 'bloodhunter'):
+        return roll_die(1, 10)
+    elif character_class in ('wizard', 'sorcerer'):
+        return roll_die(1, 6)
 
 
 def main():
@@ -225,6 +240,8 @@ def main():
     new_guy_2 = create_character(6)
     print_character(new_guy_2)
     combat_round(new_guy, new_guy_2)
+    print_character(new_guy_2)
+    print_character(new_guy)
 
 
 if __name__ == '__main__':
