@@ -10,7 +10,7 @@ import copy
 
 
 def roll_die(number_of_rolls, number_of_sides):
-    """Rolls a die a specified number of times and adds them up
+    """ Rolls a die a specified number of times and adds them up
 
     PARAM number_of_rolls an int
     PARAM number_of_sides an int
@@ -30,7 +30,7 @@ def roll_die(number_of_rolls, number_of_sides):
 
 
 def choose_inventory(inventory, selection):
-    """chooses a certain amount of items randomly from a given list
+    """ Chooses a certain amount of items randomly from a given list
 
     PARAM inventory a list
     PARAM selection an int
@@ -58,7 +58,7 @@ def choose_inventory(inventory, selection):
 
 
 def create_character(syllables):
-    """creates a dictionary with character name and 6 core attributes
+    """ Creates a dictionary with character name and 6 core attributes
 
     PARAM syllables an int
     PRECONDITION syllables must be a positive int
@@ -78,7 +78,7 @@ def create_character(syllables):
     character_dict['name'] = generate_name(syllables)
     character_dict['class'] = class_selection()
 
-    # Calculate hitpoints based on class chosen
+    # Calculate HitPoints based on class chosen
     character_dict['HitPoints'] = calculate_hit_die(character_dict['class'])
 
 
@@ -93,7 +93,7 @@ def create_character(syllables):
 
 
 def print_character(character):
-    """prints character list to console
+    """ Prints character dictionary to console
 
     PARAM character a dictionary
     PRECONDITION character must be a dictionary
@@ -104,7 +104,7 @@ def print_character(character):
 
 
 def generate_name(syllables):
-    """ generates a name
+    """ Generates a name
 
     PARAM syllables an int
     PRECONDITION syllables is a positive integer
@@ -118,7 +118,7 @@ def generate_name(syllables):
 
 
 def generate_vowel():
-    """ generate a vowel
+    """ Generate a vowel
 
     RETURN a string with 1 vowel
     """
@@ -128,7 +128,7 @@ def generate_vowel():
 
 
 def generate_consonant():
-    """ generate a consonant
+    """ Generate a consonant
 
     RETURN a string with 1 consonant
     """
@@ -138,7 +138,7 @@ def generate_consonant():
 
 
 def generate_syllable():
-    """ generate a syllable with 1 consonant and 1 vowel
+    """ Generate a syllable with 1 consonant and 1 vowel
 
     RETURN a string with a syllable
     """
@@ -147,7 +147,7 @@ def generate_syllable():
 
 
 def class_selection():
-    """ asks user to select a class from a list of choices
+    """ Asks user to select a class from a list of choices
 
     RETURN a string with the inputted class in lowercase
     """
@@ -174,7 +174,7 @@ def combat_round(opponent_1, opponent_2):
     PARAM opponent_2 a correctly formatted dictionary
     PRECONDITION opponent_1 is a correctly formatted dictionary
     PRECONDITION opponent_2 is a correctly formatted dictionary
-    POSTCONDITION a round of combat is played
+    POSTCONDITION a round of combat is played with players hp lowered by amount lost in battle
     """
     attacker_1 = None
     attacker_2 = None
@@ -198,6 +198,14 @@ def combat_round(opponent_1, opponent_2):
 
 
 def attack_player(attacker, defender):
+    """ Attacker rolls dice to see how much he hits the defender for
+
+    PARAM attacker a correctly formatted dictionary
+    PARAM defender a correctly formatted dictionary
+    PRECONDITION attacker is a correctly formatted dictionary
+    PRECONDITION defender is a correctly formatted dictionary
+    POSTCONDITION attacker attacks defender and lowers defenders health by amount hit and prints a message
+    """
     # Rolls die to check if attacker hits the defender
     if roll_die(1, 20) > defender['dexterity']:
         successful_strike = True
@@ -222,6 +230,13 @@ def attack_player(attacker, defender):
 
 
 def calculate_hit_die(character_class):
+    """Rolls a hit die based on character class for damage or hp
+
+    PARAM character_class a correctly formatted dictionary
+    PRECONDITION character_class is a correctly formatted dictionary
+    POSTCONDITION a die is rolled based on class
+    RETURN the integer value of the rolled hit die
+    """
     if character_class == 'barbarian':
         return roll_die(1, 12)
     elif character_class in ('bard', 'cleric', 'druid', 'monk', 'rogue', 'warlock'):
