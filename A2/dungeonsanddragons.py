@@ -7,6 +7,7 @@
 
 import random
 import copy
+import doctest
 
 
 def roll_die(number_of_rolls, number_of_sides):
@@ -98,6 +99,21 @@ def print_character(character):
     PARAM character a dictionary
     PRECONDITION character must be a dictionary
     POSTCONDITION character is printed to console
+
+    >>> print_character({'name': 'tommy', 'class': 'druid', 'HitPoints': 5, 'strength': 9, 'dexterity': 13,\
+                         'constitution': 14, 'intelligence': 9, 'wisdom': 9, 'charisma': 7, 'XP': 0,\
+                         'items': ['sword', 'axe', 'bow', 'blowgun', 'staff']})
+    name tommy
+    class druid
+    HitPoints 5
+    strength 9
+    dexterity 13
+    constitution 14
+    intelligence 9
+    wisdom 9
+    charisma 7
+    XP 0
+    items ['sword', 'axe', 'bow', 'blowgun', 'staff']
     """
     for attribute, value in character.items():
         print(attribute, value)
@@ -248,6 +264,7 @@ def calculate_hit_die(character_class):
 
 
 def main():
+    doctest.testmod()
     new_guy = create_character(3)
     print_character(new_guy)
     new_guy['items'] = choose_inventory(['a', 'b', 'c', 'd', 'e'], 3)
