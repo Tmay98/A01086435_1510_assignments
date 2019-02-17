@@ -277,15 +277,30 @@ def calculate_hit_die(character_class):
 
 def main():
     doctest.testmod()
-    new_guy = create_character(3)
+    print('Create the first character')
+    syllables_1 = int(input('Enter the number of syllables for the first character\n'))
+    new_guy = create_character(syllables_1)
+    print('\n')
     print_character(new_guy)
-    new_guy['items'] = choose_inventory(['a', 'b', 'c', 'd', 'e'], 3)
-    print_character(new_guy)
-    new_guy_2 = create_character(6)
+    print('\n')
+    items = ['Bow', 'Sword', 'Blowgun', 'Staff', 'Axe', 'Wand']
+    number_of_items = int(input('Enter an amount of items for your inventory between 0 and 6:\n '))
+    new_guy['items'] = choose_inventory(items, number_of_items)
+    print(new_guy['items'], 'were added to the inventory\n')
+    print('Create the second character now\n')
+    syllables_2 = int(input('Enter the number of syllables for the second character:\n'))
+    new_guy_2 = create_character(syllables_2)
+    print('\n')
     print_character(new_guy_2)
+    input('enter anything to start a combat round between the 2 characters\n')
     combat_round(new_guy, new_guy_2)
+    print('\n')
     print_character(new_guy_2)
+    print('\n')
     print_character(new_guy)
+    number_of_die = int(input('\nnow roll a die for fun\nEnter the number of die to roll\n'))
+    number_of_sides = int(input('now enter the amount of sides on the dice\n'))
+    print('the sum of the rolled dice is', roll_die(number_of_die, number_of_sides))
 
 
 if __name__ == '__main__':
