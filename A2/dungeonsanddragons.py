@@ -1,4 +1,16 @@
-"""dungeons and dragons module
+"""Functions useful for a game of dungeons and dragons
+roll_die takes a number of rolls and sides of a dice and returns the sum
+choose_inventory takes a list of items and an integer and returns a random list of items
+generate_name creates a random name for a character
+create character takes a length as an int and creates a character dictionary with name, hp, xp, and attributes
+print_character takes a character dictionary and prints it out
+generate_vowel generates a random vowel
+generate_consonant generates a random consanant
+generate_syllable generates a random syllable with a consonant followed by a vowel
+class_selection takes user input for what class they want
+combat_round plays a round of combat between 2 characters
+attack_player has an attacker attack a defender and lower the defenders hp by the amount of damage taken
+calculate_hit_die rolls a random die based on class for HitPoints and damage
 """
 
 # Tommy May
