@@ -25,14 +25,6 @@ def roll_die(number_of_rolls, number_of_sides):
     return random_total
 
 
-def monster_encounter():
-    pass
-
-
-def monster_fight():
-    pass
-
-
 def print_message(player, dungeon_map, player_input):
     if player_input[0:4] == 'take':
         print('you pick up', player_input[5:])
@@ -70,19 +62,12 @@ def user_input(player, dungeon_map):
             error = collision_check(player_input, player, dungeon_map)
         elif player_input[0:4] == 'take':
             error = take_item_check(player_input, player, dungeon_map)
-        elif player_input == 'unlock door' and dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ' \
-                and 'key' in player['inventory']:
-            dungeon_map[player['xlocation']][player['ylocation'] - 1] = '   '
-            error = False
-        elif player_input == 'open door' and dungeon_map[player['xlocation']][player['ylocation'] + 1] == ' D ':
-            dungeon_map[player['xlocation']][player['ylocation'] + 1] = '   '
-            error = False
+        elif player_input[-4:] == 'door':
+            error = door_check(player_input, dungeon_map, player)
         elif player_input == 'help':
             help_menu()
-        elif player_input == 'give bread':
-            error = False
-        elif player_input == 'use sword':
-            error = False
+        elif player_input[0:3] == 'use':
+            error = item_check()
         elif player_input == 'quit':
             error = False
         else:
@@ -90,10 +75,41 @@ def user_input(player, dungeon_map):
     return player_input
 
 
+def item_check(player_input, player, dungeon_map):
+    if player_input == 'use sword' and 'sword' in player['inventory']:
+        if dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' B ':
+            print('You stab the undead king in the head, killing him')
+            dungeon_map[player['xlocation']][player['ylocation'] - 1] = '   '
+        else:
+            print('You swing your sword around looking really dumb')
+        return False
+    elif player_input == 'use bread':
+        print('You eat the bread and return to full HP')
+        player['HitPoints'] = 10
+        return False
+    else:
+        # no correct input found so returns error = true
+        return True
+
+
+def door_check(player_input, dungeon_map, player):
+    if player_input == 'unlock door' and dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ' \
+            and 'key' in player['inventory']:
+        dungeon_map[player['xlocation']][player['ylocation'] - 1] = '   '
+        return False
+    elif player_input == 'open door' and dungeon_map[player['xlocation']][player['ylocation'] + 1] == ' D ':
+        dungeon_map[player['xlocation']][player['ylocation'] + 1] = '   '
+        return False
+    else:
+        return True
+
+
+
 def help_menu():
     print('List of keywords you can type:')
     print('[north, east, south, west] : move in that direction')
     print('[take \'item\'] : takes the item you enter')
+    print('[use \'item\'] : uses the item you enter')
     print('[open door] : opens an adjacent door')
     print('[unlock door] : unlocks an adjacent door')
     print('[help] : opens the help menu')
@@ -155,9 +171,16 @@ def main():
         print_message(new_player, new_map, player_input)
         map.display_map(new_map, new_player)
         character.print_character(new_player)
+
         if player_input in moved_list:
-            new_player['HitPoints'] += 1
+            if new_player['HitPoints'] < 10:
+                new_player['HitPoints'] += 1
             monster.check_monster_encounter(new_player)
+
+        if new_player['HitPoints'] <= 0:
+            print('You died :(')
+            break
+
         player_input = user_input(new_player, new_map)
 
 
