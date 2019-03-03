@@ -33,6 +33,16 @@ def print_message(player, dungeon_map, player_input):
     elif player_input == 'unlock door':
         print('you unlock the door')
     scenario_message(player, dungeon_map)
+    item_on_ground_message(player, dungeon_map)
+
+
+def item_on_ground_message(player, dungeon_map):
+    if dungeon_map[player['xlocation']][player['ylocation']] == ' K ':
+        print('You see a key on a table')
+    elif dungeon_map[player['xlocation']][player['ylocation']] == ' S ':
+        print('There is a sword propped up against the wall, it seems to be in good condition')
+    elif dungeon_map[player['xlocation']][player['ylocation']] == ' B ':
+        print('you ses some bread left on a bench, it looks edible')
 
 
 def scenario_message(player, dungeon_map):
@@ -44,14 +54,16 @@ def scenario_message(player, dungeon_map):
         print('There is a run down shack to your left')
         player['message_seen'].append(1)
     if 2 not in player['message_seen'] and dungeon_map[player['xlocation'] - 1][player['ylocation']] == '| |':
-        print('There is a small bridge leading over the river')
-        print('it seems to be the only way to cross')
+        print('There is a small bridge leading over the river\nit seems to be the only way to cross')
+        player['message_seen'].append(2)
     if 3 not in player['message_seen'] and dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ':
         print('You reach the treasury but it looks like the door is locked')
         print('You will need some sort of key to get through')
+        player['message_seen'].append(3)
     if 4 not in player['message_seen'] and 'treasure' in player['inventory']:
         print('you accomplish your goal and retrieved the treasure')
         print('now you may roam this town killing monsters as you wish')
+        player['message_seen'].append(4)
 
 
 def user_input(player, dungeon_map):
@@ -67,7 +79,7 @@ def user_input(player, dungeon_map):
         elif player_input == 'help':
             help_menu()
         elif player_input[0:3] == 'use':
-            error = item_check()
+            error = item_check(player_input, player)
         elif player_input == 'quit':
             error = False
         else:
@@ -75,13 +87,9 @@ def user_input(player, dungeon_map):
     return player_input
 
 
-def item_check(player_input, player, dungeon_map):
+def item_check(player_input, player):
     if player_input == 'use sword' and 'sword' in player['inventory']:
-        if dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' B ':
-            print('You stab the undead king in the head, killing him')
-            dungeon_map[player['xlocation']][player['ylocation'] - 1] = '   '
-        else:
-            print('You swing your sword around looking really dumb')
+        print('You swing your sword around looking really dumb')
         return False
     elif player_input == 'use bread':
         print('You eat the bread and return to full HP')
@@ -102,7 +110,6 @@ def door_check(player_input, dungeon_map, player):
         return False
     else:
         return True
-
 
 
 def help_menu():
