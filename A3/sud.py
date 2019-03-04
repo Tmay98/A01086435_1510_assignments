@@ -26,13 +26,34 @@ def roll_die(number_of_rolls, number_of_sides):
 
 
 def print_message(player, dungeon_map, player_input):
+    """Prints messages based on player input and location on map
+
+    :param player:
+    :param dungeon_map:
+    :param player_input:
+    :return:
+    """
+    # contains keywords for movement
+    moved_list = ['north', 'east', 'south', 'west']
+    # play a message for user taking something
     if player_input[0:4] == 'take':
-        print('you pick up', player_input[5:])
+        # print a message if you take treasure
+        if player_input == 'take treaasure':
+            print('you accomplish your goal and retrieved the treasure')
+            print('now you may roam this town killing monsters as you wish')
+        # print a message about the item you picked up
+        else:
+            print('you pick up', player_input[5:])
+    # print that you open the door if input is open door
     elif player_input == 'open door':
         print('you open the door')
+    # print that you unlocked the door if input is unlock door
     elif player_input == 'unlock door':
         print('you unlock the door')
-    scenario_message(player, dungeon_map)
+    # play a message about your surroundings if you move
+    if player_input in moved_list:
+        scenario_message(player, dungeon_map)
+    # play a message about what is on the ground if you walk on it
     item_on_ground_message(player, dungeon_map)
 
 
@@ -43,27 +64,31 @@ def item_on_ground_message(player, dungeon_map):
         print('There is a sword propped up against the wall, it seems to be in good condition')
     elif dungeon_map[player['xlocation']][player['ylocation']] == ' B ':
         print('you ses some bread left on a bench, it looks edible')
+    elif dungeon_map[player['xlocation']][player['ylocation']] == ' C ':
+        print('you find the treasure you were searching for')
 
 
 def scenario_message(player, dungeon_map):
-    if 0 not in player['message_seen'] and player['xlocation'] == 9 and player['ylocation'] == 4:
+    if player['xlocation'] == 9 and player['ylocation'] == 4:
         print('You come across a church that is still in good condition')
-        print('There is a door that seems to be unlocked, maybe there is something in there')
-        player['message_seen'].append(0)
-    if 1 not in player['message_seen'] and player['xlocation'] == 7 and player['ylocation'] == 4:
+        print('There is a door that seems to be unlocked')
+    elif player['xlocation'] == 7 and player['ylocation'] == 4:
         print('There is a run down shack to your left')
-        player['message_seen'].append(1)
-    if 2 not in player['message_seen'] and dungeon_map[player['xlocation'] - 1][player['ylocation']] == '| |':
-        print('There is a small bridge leading over the river\nit seems to be the only way to cross')
-        player['message_seen'].append(2)
-    if 3 not in player['message_seen'] and dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ':
+    elif dungeon_map[player['xlocation']][player['ylocation']] == '| |':
+        print('You walk over the stone bridge')
+    elif dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ':
         print('You reach the treasury but it looks like the door is locked')
         print('You will need some sort of key to get through')
-        player['message_seen'].append(3)
-    if 4 not in player['message_seen'] and 'treasure' in player['inventory']:
-        print('you accomplish your goal and retrieved the treasure')
-        print('now you may roam this town killing monsters as you wish')
-        player['message_seen'].append(4)
+    elif dungeon_map[player['xlocation']][player['ylocation']] == '   ':
+        print('You are on a dirt path')
+    elif dungeon_map[player['xlocation']][player['ylocation']] == '...':
+        print('The wooden boards creak underneath your feet')
+    elif dungeon_map[player['xlocation']][player['ylocation']] == ':::':
+        print('You are on a grassy field')
+    elif dungeon_map[player['xlocation']][player['ylocation']] == '###':
+        print('You walk over the cold stone floor of the church')
+    elif dungeon_map[player['xlocation']][player['ylocation']] == '"""':
+        print('You are in the treasury')
 
 
 def user_input(player, dungeon_map):
@@ -97,6 +122,7 @@ def item_check(player_input, player):
         return False
     else:
         # no correct input found so returns error = true
+        print('i dont understand')
         return True
 
 
@@ -108,7 +134,12 @@ def door_check(player_input, dungeon_map, player):
     elif player_input == 'open door' and dungeon_map[player['xlocation']][player['ylocation'] + 1] == ' D ':
         dungeon_map[player['xlocation']][player['ylocation'] + 1] = '   '
         return False
+    elif player_input == 'unlock door' and dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ' \
+            and 'key' not in player['inventory']:
+        print('You do not have a key to open that door')
+        return True
     else:
+        print('i dont understand')
         return True
 
 
@@ -124,11 +155,11 @@ def help_menu():
 
 def take_item_check(player_input, player, dungeon_map):
     if player_input == 'take key' and dungeon_map[player['xlocation']][player['ylocation']] == ' K ':
-        dungeon_map[player['xlocation']][player['ylocation']] = '   '
+        dungeon_map[player['xlocation']][player['ylocation']] = '###'
         player['inventory'].append('key')
         return False
     elif player_input == 'take sword' and dungeon_map[player['xlocation']][player['ylocation']] == ' S ':
-        dungeon_map[player['xlocation']][player['ylocation']] = '   '
+        dungeon_map[player['xlocation']][player['ylocation']] = '...'
         player['inventory'].append('sword')
         return False
     elif player_input == 'take bread' and dungeon_map[player['xlocation']][player['ylocation']] == ' B ':
@@ -136,7 +167,7 @@ def take_item_check(player_input, player, dungeon_map):
         player['inventory'].append('bread')
         return False
     elif player_input == 'take treasure' and dungeon_map[player['xlocation']][player['ylocation']] == ' C ':
-        dungeon_map[player['xlocation']][player['ylocation']] = '   '
+        dungeon_map[player['xlocation']][player['ylocation']] = '"""'
         player['inventory'].append('treasure')
         return False
     else:
@@ -168,7 +199,7 @@ def main():
     moved_list = ['north', 'east', 'south', 'west']
     new_player = character.create_character()
     new_map = map.create_map()
-    print('You come across an abandoned village in your search for a hidden treasure.')
+    print('You are in an abandoned village in your search for a hidden treasure.')
     print('Type north, east, south, or west to move')
     print('Type help to see a list of other keywords you can use')
     map.display_map(new_map, new_player)
