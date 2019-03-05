@@ -301,7 +301,6 @@ def main():
     while player_input != 'quit':
         print_message(new_player, new_map, player_input)
         map.display_map(new_map, new_player)
-        character.print_character(new_player)
 
         if player_input in moved_list:
             if new_player['HitPoints'] < 10:
@@ -312,6 +311,7 @@ def main():
             print('You died :(')
             break
 
+        character.print_character(new_player)
         player_input = user_input(new_player, new_map)
 
 
