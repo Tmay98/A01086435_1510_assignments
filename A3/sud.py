@@ -1,4 +1,22 @@
-"""Simple SUD"""
+"""A simple SUD adventure
+
+roll_die: takes a number of rolls and sides of a dice and returns the sum
+print_message: Prints a message based on player input and location
+item_on_ground_message: Prints a message about an item on the ground
+scenario_message: Prints a message about the environment
+user_input: Takes user input and returns it when a correct input is entered
+item_check: checks if the user has the item they are trying to use
+door_check: if user tries to interact with a door, checks if the door is adjacent
+help_menu: Prints a help menu with all keywords usable by player
+take_item_check: if user inputs to take an item checks if it is on the players tile
+collision_check: checks if there is a wall where the player is trying to move
+
+"""
+
+# Tommy May
+# A01086435
+# 2019 March 05
+
 import random
 import character
 import map
@@ -28,10 +46,13 @@ def roll_die(number_of_rolls, number_of_sides):
 def print_message(player, dungeon_map, player_input):
     """Prints messages based on player input and location on map
 
-    :param player:
-    :param dungeon_map:
-    :param player_input:
-    :return:
+    PARAM player a correctly formatted dictionary
+    PARAM dungeon_map a list of lists
+    PARAM player_input a string
+    PRECONDITION player is a correctly formatted dictionary
+    PRECONDITION dungeon_map is a list with lists with 12 elements each
+    PRECONDITION player_input is a correct input string
+    POSTCONDITION A message is printed based on input given
     """
     # contains keywords for movement
     moved_list = ['north', 'east', 'south', 'west']
@@ -44,6 +65,13 @@ def print_message(player, dungeon_map, player_input):
         # print a message about the item you picked up
         else:
             print('you pick up', player_input[5:])
+    # print a message if user uses sword
+    elif player_input == 'use sword':
+        print('You swing your sword around looking really dumb')
+    # print a message and heal user to 10hp if user uses bread
+    elif player_input == 'use bread':
+        print('You eat the bread and return to full HP')
+        player['HitPoints'] = 10
     # print that you open the door if input is open door
     elif player_input == 'open door':
         print('you open the door')
@@ -58,6 +86,14 @@ def print_message(player, dungeon_map, player_input):
 
 
 def item_on_ground_message(player, dungeon_map):
+    """Prints what item is on the ground when moved onto
+
+    PARAM player a correctly formatted dictionary
+    PARAM dungeon_map a list of lists
+    PRECONDITION player is a correctly formatted dictionary
+    PRECONDITION dungeon_map is a list with lists with 12 elements each
+    POSTCONDITION prints a message about what item is on the ground is printed
+    """
     if dungeon_map[player['xlocation']][player['ylocation']] == ' K ':
         print('You see a key on a table')
     elif dungeon_map[player['xlocation']][player['ylocation']] == ' S ':
@@ -69,6 +105,14 @@ def item_on_ground_message(player, dungeon_map):
 
 
 def scenario_message(player, dungeon_map):
+    """Prints a message about the environment
+
+    PARAM player a correctly formatted dictionary
+    PARAM dungeon_map a list of lists
+    PRECONDITION player is a correctly formatted dictionary
+    PRECONDITION dungeon_map is a list with lists with 12 elements each
+    POSTCONDITION prints a message about the environment the player is on
+    """
     if player['xlocation'] == 9 and player['ylocation'] == 4:
         print('You come across a church that is still in good condition')
         print('There is a door that seems to be unlocked')
@@ -92,6 +136,15 @@ def scenario_message(player, dungeon_map):
 
 
 def user_input(player, dungeon_map):
+    """Takes user input and returns it when a correct input is entered
+
+    PARAM player a correctly formatted dictionary
+    PARAM dungeon_map a list of lists
+    PRECONDITION player is a correctly formatted dictionary
+    PRECONDITION dungeon_map is a list with lists with 12 elements each
+    POSTCONDITION prints error messages until a correct input is entered
+    RETURN user input once it is a correct input
+    """
     error = True
     while error:
         player_input = input()
@@ -113,12 +166,17 @@ def user_input(player, dungeon_map):
 
 
 def item_check(player_input, player):
+    """checks if the user has the item they are trying to use
+
+    PARAM player_input a string
+    PARAM player a dictionary
+    PRECONDITION player_input is a string
+    PRECONDITION player is a correctly formatted dictionary
+    RETURN True if player doesnt have item, False if they do
+    """
     if player_input == 'use sword' and 'sword' in player['inventory']:
-        print('You swing your sword around looking really dumb')
         return False
-    elif player_input == 'use bread':
-        print('You eat the bread and return to full HP')
-        player['HitPoints'] = 10
+    elif player_input == 'use bread' and 'bread' in player['inventory']:
         return False
     else:
         # no correct input found so returns error = true
@@ -127,6 +185,17 @@ def item_check(player_input, player):
 
 
 def door_check(player_input, dungeon_map, player):
+    """if user tries to interact with a door, checks if the door is adjacent
+
+    PARAM player a correctly formatted dictionary
+    PARAM dungeon_map a list of lists
+    PARAM player_input a string
+    PRECONDITION player is a correctly formatted dictionary
+    PRECONDITION dungeon_map is a list of lists with 12 elements each
+    PRECONDITION player_input is a string
+    POSTCONDITION Prints nothing or an error message if input is incorrect
+    RETURN True if error in input and False if no error
+    """
     if player_input == 'unlock door' and dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ' \
             and 'key' in player['inventory']:
         dungeon_map[player['xlocation']][player['ylocation'] - 1] = '   '
@@ -144,6 +213,8 @@ def door_check(player_input, dungeon_map, player):
 
 
 def help_menu():
+    """Prints a help menu with all keywords usable by player
+    """
     print('List of keywords you can type:')
     print('[north, east, south, west] : move in that direction')
     print('[take \'item\'] : takes the item you enter')
@@ -154,6 +225,17 @@ def help_menu():
 
 
 def take_item_check(player_input, player, dungeon_map):
+    """if user inputs to take an item checks if it is on the players tile
+
+    PARAM player a correctly formatted dictionary
+    PARAM dungeon_map a list of lists
+    PARAM player_input a string
+    PRECONDITION player is a correctly formatted dictionary
+    PRECONDITION dungeon_map is a list of lists with 12 elements each
+    PRECONDITION player_input is a string
+    POSTCONDITION Prints nothing or an error message if input is incorrect
+    RETURN True if error in input and False if no error
+    """
     if player_input == 'take key' and dungeon_map[player['xlocation']][player['ylocation']] == ' K ':
         dungeon_map[player['xlocation']][player['ylocation']] = '###'
         player['inventory'].append('key')
@@ -176,6 +258,17 @@ def take_item_check(player_input, player, dungeon_map):
 
 
 def collision_check(player_input, player, dungeon_map):
+    """checks if there is a wall where the player is trying to move
+
+    PARAM player a correctly formatted dictionary
+    PARAM dungeon_map a list of lists
+    PARAM player_input a string
+    PRECONDITION player is a correctly formatted dictionary
+    PRECONDITION dungeon_map is a list of lists with 12 elements each
+    PRECONDITION player_input is a string
+    POSTCONDITION Prints nothing or an error message if there is a wall
+    RETURN True if error in input and False if no error
+    """
     unwalkable_terrain = ('---', ' | ', ' \ ', ' / ', '~~~', '|||', ' D ', ' L ')
 
     if player_input == 'east' and dungeon_map[player['xlocation']][player['ylocation'] + 1] not in unwalkable_terrain:
