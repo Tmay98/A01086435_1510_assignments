@@ -38,7 +38,7 @@ def print_message(player, dungeon_map, player_input):
     # play a message for user taking something
     if player_input[0:4] == 'take':
         # print a message if you take treasure
-        if player_input == 'take treaasure':
+        if player_input == 'take treasure':
             print('you accomplish your goal and retrieved the treasure')
             print('now you may roam this town killing monsters as you wish')
         # print a message about the item you picked up
