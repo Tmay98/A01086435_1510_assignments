@@ -1,6 +1,8 @@
 """character module"""
 
 
+import json
+
 character_info = {'name': '', 'class': '', 'HitPoints': 10, 'xlocation': 10, 'ylocation': 1, 'inventory': []}
 
 
@@ -49,4 +51,64 @@ def class_selection():
             print('You did not enter a correct class, try again')
 
     return class_choice.lower()
+
+
+def get_user():
+    """user enters there characters name and it is either loaded or created
+
+    POSTCONDITION character with entered name is loaded or created
+    RETURN player a character info dictionary
+    """
+    character_name = input('Enter your character\'s name')
+    filename = character_name + '.json'
+    player = get_stored_user(filename)
+    if player:
+        pass
+    else:
+        player = create_new_user(filename, character_name)
+    return player
+
+
+def get_stored_user(filename):
+    """loads a characters info from a .json file
+
+    PARAM filename a string
+    PRECONDITION filename is in format name.json
+    POSTCONDITION character info is loaded
+    RETURN existing_player a character info dictionary
+    """
+    try:
+        with open(filename) as f_obj:
+            existing_player = json.load(f_obj)
+    except FileNotFoundError:
+        return None
+    else:
+        return existing_player
+
+
+def create_new_user(filename, character_name):
+    """Creates a new user given a character name
+
+    PARAM filename a string
+    PARAM character_name a string
+    PRECONDITION filename is in format name.json
+    PRECONDITION character_name is a string
+    POSTCONDITION character info dictionary is created
+    RETURN character info dictionary
+    """
+    with open(filename, 'w') as f_obj:
+        new_player = create_character(character_name)
+        return new_player
+
+
+def save_user(character_dict):
+    """saves the current users progress in a .json file
+
+    PARAM character a dictionary
+    PRECONDITION character is a dictionary with character info
+    POSTCONDITION the character info dictionary is saved in a .json file
+    """
+    filename = character_dict['name'] + '.json'
+    with open(filename, 'w') as f_obj:
+        json.dump(character_dict, f_obj)
 
