@@ -1,7 +1,10 @@
 """character module"""
 
 
-def create_character():
+character_info = {'name': '', 'class': '', 'HitPoints': 10, 'xlocation': 10, 'ylocation': 1, 'inventory': []}
+
+
+def create_character(name):
     """ Creates a dictionary with character name and 6 core attributes
 
     PARAM syllables an int
@@ -9,26 +12,22 @@ def create_character():
     POSTCONDITION a correctly formatted character dictionary
     RETURN correctly formatted character dictionary
     """
-
-    # Creates initial character dictionary
-    character_dict = {'name': '', 'class': '', 'HitPoints': 10, 'xlocation': 10, 'ylocation': 1, 'inventory': []}
-
+    global character_info
     # Generate name and class for character_dict
-    character_dict['name'] = input('Enter your character\'s name')
-    character_dict['class'] = class_selection()
-    return character_dict
+    character_info['name'] = name
+    character_info['class'] = class_selection()
+    return character_info
 
 
 def print_character(character):
-    """ Prints character dictionary to console
+    """ Prints character Hp and name
 
     PARAM character a dictionary
     PRECONDITION character must be a dictionary
-    POSTCONDITION character is printed to console
+    POSTCONDITION character is printed
 
     """
     print('Name:', character['name'], 'Hitpoints:', character['HitPoints'])
-
 
 
 def class_selection():
@@ -51,11 +50,3 @@ def class_selection():
 
     return class_choice.lower()
 
-
-def player_input():
-    pass
-
-
-def move_player():
-    """moves player given input direction"""
-    pass
