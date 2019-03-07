@@ -18,6 +18,7 @@ collision_check: checks if there is a wall where the player is trying to move
 # 2019 March 05
 
 import random
+import json
 import character
 import map
 import monster
@@ -288,31 +289,99 @@ def collision_check(player_input, player, dungeon_map):
         return True
 
 
+def get_user():
+    """user enters there characters name and it is either loaded or created
+
+    POSTCONDITION character with entered name is loaded or created
+    RETURN player a character info dictionary
+    """
+    character_name = input('Enter your character\'s name')
+    filename = character_name + '.json'
+    player = get_stored_user(filename)
+    if player:
+        pass
+    else:
+        player = create_new_user(filename, character_name)
+    return player
+
+
+def get_stored_user(filename):
+    """loads a characters info from a .json file
+
+    PARAM filename a string
+    PRECONDITION filename is in format name.json
+    POSTCONDITION character info is loaded
+    RETURN existing_player a character info dictionary
+    """
+    try:
+        with open(filename) as f_obj:
+            existing_player = json.load(f_obj)
+    except FileNotFoundError:
+        return None
+    else:
+        return existing_player
+
+
+def create_new_user(filename, character_name):
+    """Creates a new user given a character name
+
+    PARAM filename a string
+    PARAM character_name a string
+    PRECONDITION filename is in format name.json
+    PRECONDITION character_name is a string
+    POSTCONDITION character info dictionary is created
+    RETURN character info dictionary
+    """
+    with open(filename, 'w') as f_obj:
+        new_player = character.create_character(character_name)
+        return new_player
+
+
+def save_user(character_dict):
+    """saves the current users progress in a .json file
+
+    PARAM character a dictionary
+    PRECONDITION character is a dictionary with character info
+    POSTCONDITION the character info dictionary is saved in a .json file
+    """
+    filename = character_dict['name'] + '.json'
+    with open(filename, 'w') as f_obj:
+        json.dump(character_dict, f_obj)
+
+
 def main():
     moved_list = ['north', 'east', 'south', 'west']
-    new_player = character.create_character()
+    # load or create a character
+    player = get_user()
+
+    # prints initial map, character, and message
     new_map = map.create_map()
     print('You are in an abandoned village in your search for a hidden treasure.')
     print('Type north, east, south, or west to move')
     print('Type help to see a list of other keywords you can use')
-    map.display_map(new_map, new_player)
-    character.print_character(new_player)
-    player_input = user_input(new_player, new_map)
+    map.display_map(new_map, player)
+    character.print_character(player)
+    player_input = user_input(player, new_map)
+
+    # game loop continues until user inputs quit
     while player_input != 'quit':
-        print_message(new_player, new_map, player_input)
-        map.display_map(new_map, new_player)
+        print_message(player, new_map, player_input)
+        map.display_map(new_map, player)
 
         if player_input in moved_list:
-            if new_player['HitPoints'] < 10:
-                new_player['HitPoints'] += 1
-            monster.check_monster_encounter(new_player)
+            if player['HitPoints'] < 10:
+                player['HitPoints'] += 1
+            monster.check_monster_encounter(player)
 
-        if new_player['HitPoints'] <= 0:
+        if player['HitPoints'] <= 0:
             print('You died :(')
             break
 
-        character.print_character(new_player)
-        player_input = user_input(new_player, new_map)
+        character.print_character(player)
+        player_input = user_input(player, new_map)
+
+    # saves user in a .json file
+    save_user(player)
 
 
 if __name__ == '__main__':
