@@ -1,6 +1,7 @@
 """Map functions for sud"""
 
 import character
+import json
 
 dungeon_map = [[' / ', '---', '---', '---', '---', '---', '---', '---', '---', '---', '---', ' \ '],
                [' | ', ' / ', '---', '---', '---', '|||', ':::', ':::', ':::', ':::', ':::', ' | '],
@@ -25,7 +26,10 @@ def set_map(column, row, value):
 
 
 def display_map():
-    # displays a 3x3 portion of the map with the user in the center as a P
+    """displays a 3x3 portion of the map with user in the center
+
+    POSTCONDITION 3x3 map portion is displayed
+    """
     player = character.get_character_info()
     for i in range(player['column'] - 1, player['column'] + 2):
         for j in range(player['row'] - 1, player['row'] + 2):
@@ -36,3 +40,58 @@ def display_map():
         print('\n')
 
 
+def get_user_map():
+    """A map is either initialized or loaded if it exists already
+
+    POSTCONDITION map is initialized or loaded as a 12x12 list
+    """
+    global dungeon_map
+    filename = character.get_character_info()['name'] + '_map.json'
+    my_map = get_stored_map(filename)
+    if my_map:
+        pass
+    else:
+        my_map = create_new_map(filename)
+    dungeon_map = my_map
+
+
+def get_stored_map(filename):
+    """Loads map info from a .json file
+
+    PARAM filename a string
+    PRECONDITION filename is in format name.json
+    POSTCONDITION map info is loaded
+    RETURN existing_map a 12x12 list representing a map
+    """
+    try:
+        with open(filename) as f_obj:
+            existing_map = json.load(f_obj)
+    except FileNotFoundError:
+        return None
+    else:
+        return existing_map
+
+
+def create_new_map(filename):
+    """Creates the initial map
+
+    PARAM filename a string
+    PRECONDITION filename is in format name.json
+    POSTCONDITION dungeon_map is created
+    RETURN dungeon_map 12x12 list representing the map
+    """
+    with open(filename, 'w') as f_obj:
+        json.dump(dungeon_map, f_obj)
+        return dungeon_map
+
+
+def save_map():
+    """Saves the current map in a .json file
+
+    PARAM map a list
+    PRECONDITION map is a list
+    POSTCONDITION the map is saved in a .json file
+    """
+    filename = character.get_character_info()['name'] + '_map.json'
+    with open(filename, 'w') as f_obj:
+        json.dump(dungeon_map, f_obj)

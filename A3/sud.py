@@ -5,8 +5,8 @@ print_message: Prints a message based on player input and location
 item_on_ground_message: Prints a message about an item on the ground
 scenario_message: Prints a message about the environment
 user_input: Takes user input and returns it when a correct input is entered
-item_check: checks if the user has the item they are trying to use
-door_check: if user tries to interact with a door, checks if the door is adjacent
+have_item_check: checks if the user has the item they are trying to use
+adjacent_door_check: if user tries to interact with a door, checks if the door is adjacent
 help_menu: Prints a help menu with all keywords usable by player
 take_item_check: if user inputs to take an item checks if it is on the players tile
 collision_check: checks if there is a wall where the player is trying to move
@@ -302,10 +302,9 @@ def collision_check(player_input):
 
 def main():
     moved_list = ['north', 'east', 'south', 'west']
-    # load or create a character
+    # load or create a character and map
     character.get_user()
-    # do same thing for map ( charactername_map.json )
-    # map.get_user_map()
+    map.get_user_map()
 
     # prints initial map, character, and message
     print('You are in an abandoned village in your search for a hidden treasure.')
@@ -320,20 +319,27 @@ def main():
         print_message(player_input)
         map.display_map()
 
+        # If player moves checks for monster encounter
         if player_input in moved_list:
-            if character.get_hitpoints() < 10:
-                character.set_hitpoints(character.get_hitpoints() + 1)
-            monster.check_monster_encounter()
+            # Checks for a monster encounter
+            if not monster.check_monster_encounter():
+                # If not encounter is found increase health
+                if character.get_hitpoints() < 10:
+                    character.set_hitpoints(character.get_hitpoints() + 1)
 
+        # exits game loop if user dies
         if character.get_hitpoints() <= 0:
             print('You died :(')
             break
 
+        # prints character and asks for next input
         character.print_character()
         player_input = user_input()
 
-    # saves user in a .json file
-    character.save_user()
+    # saves user and map in .json files if user did not die
+    if character.get_hitpoints() > 0:
+        character.save_user()
+        map.save_map()
 
 
 if __name__ == '__main__':

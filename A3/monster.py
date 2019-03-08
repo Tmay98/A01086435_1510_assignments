@@ -6,6 +6,8 @@ import character
 def check_monster_encounter():
     if sud.roll_die(1, 10) == 1:
         monster_encounter()
+        return True
+    return False
 
 
 def monster_encounter():
