@@ -44,7 +44,7 @@ def roll_die(number_of_rolls, number_of_sides):
     return random_total
 
 
-def print_message(player, dungeon_map, player_input):
+def print_message(player_input):
     """Prints messages based on player input and location on map
 
     PARAM player a correctly formatted dictionary
@@ -72,7 +72,7 @@ def print_message(player, dungeon_map, player_input):
     # print a message and heal user to 10hp if user uses bread
     elif player_input == 'use bread':
         print('You eat the bread and return to full HP')
-        player['HitPoints'] = 10
+        character.set_hitpoints(10)
     # print that you open the door if input is open door
     elif player_input == 'open door':
         print('you open the door')
@@ -81,12 +81,12 @@ def print_message(player, dungeon_map, player_input):
         print('you unlock the door')
     # play a message about your surroundings if you move
     if player_input in moved_list:
-        scenario_message(player, dungeon_map)
+        scenario_message()
     # play a message about what is on the ground if you walk on it
-    item_on_ground_message(player, dungeon_map)
+    item_on_ground_message()
 
 
-def item_on_ground_message(player, dungeon_map):
+def item_on_ground_message():
     """Prints what item is on the ground when moved onto
 
     PARAM player a correctly formatted dictionary
@@ -95,17 +95,19 @@ def item_on_ground_message(player, dungeon_map):
     PRECONDITION dungeon_map is a list with lists with 12 elements each
     POSTCONDITION prints a message about what item is on the ground is printed
     """
-    if dungeon_map[player['xlocation']][player['ylocation']] == ' K ':
+    dungeon_map = map.get_map()
+    player = character.get_character_info()
+    if dungeon_map[player['column']][player['row']] == ' K ':
         print('You see a key on a table')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == ' S ':
+    elif dungeon_map[player['column']][player['row']] == ' S ':
         print('There is a sword propped up against the wall, it seems to be in good condition')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == ' B ':
+    elif dungeon_map[player['column']][player['row']] == ' B ':
         print('you ses some bread left on a bench, it looks edible')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == ' C ':
+    elif dungeon_map[player['column']][player['row']] == ' C ':
         print('you find the treasure you were searching for')
 
 
-def scenario_message(player, dungeon_map):
+def scenario_message():
     """Prints a message about the environment
 
     PARAM player a correctly formatted dictionary
@@ -114,29 +116,31 @@ def scenario_message(player, dungeon_map):
     PRECONDITION dungeon_map is a list with lists with 12 elements each
     POSTCONDITION prints a message about the environment the player is on
     """
-    if player['xlocation'] == 9 and player['ylocation'] == 4:
+    dungeon_map = map.get_map()
+    player = character.get_character_info()
+    if player['column'] == 9 and player['row'] == 4:
         print('You come across a church that is still in good condition')
         print('There is a door that seems to be unlocked')
-    elif player['xlocation'] == 7 and player['ylocation'] == 4:
+    elif player['column'] == 7 and player['row'] == 4:
         print('There is a run down shack to your left')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == '| |':
+    elif dungeon_map[player['column']][player['row']] == '| |':
         print('You walk over the stone bridge')
-    elif dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ':
+    elif dungeon_map[player['column']][player['row'] - 1] == ' L ':
         print('You reach the treasury but it looks like the door is locked')
         print('You will need some sort of key to get through')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == '   ':
+    elif dungeon_map[player['column']][player['row']] == '   ':
         print('You are on a dirt path')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == '...':
+    elif dungeon_map[player['column']][player['row']] == '...':
         print('The wooden boards creak underneath your feet')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == ':::':
+    elif dungeon_map[player['column']][player['row']] == ':::':
         print('You are on a grassy field')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == '###':
+    elif dungeon_map[player['column']][player['row']] == '###':
         print('You walk over the cold stone floor of the church')
-    elif dungeon_map[player['xlocation']][player['ylocation']] == '"""':
+    elif dungeon_map[player['column']][player['row']] == '"""':
         print('You are in the treasury')
 
 
-def user_input(player, dungeon_map):
+def user_input():
     """Takes user input and returns it when a correct input is entered
 
     PARAM player a correctly formatted dictionary
@@ -147,18 +151,19 @@ def user_input(player, dungeon_map):
     RETURN user input once it is a correct input
     """
     error = True
+    dungeon_map = map.get_map()
     while error:
         player_input = input()
         if player_input == 'east' or player_input == 'west' or player_input == 'north' or player_input == 'south':
-            error = collision_check(player_input, player, dungeon_map)
+            error = collision_check(player_input)
         elif player_input[0:4] == 'take':
-            error = take_item_check(player_input, player, dungeon_map)
+            error = take_item_check(player_input)
         elif player_input[-4:] == 'door':
-            error = door_check(player_input, dungeon_map, player)
+            error = adjacent_door_check(player_input)
         elif player_input == 'help':
             help_menu()
         elif player_input[0:3] == 'use':
-            error = item_check(player_input, player)
+            error = have_item_check(player_input)
         elif player_input == 'quit':
             error = False
         else:
@@ -166,7 +171,7 @@ def user_input(player, dungeon_map):
     return player_input
 
 
-def item_check(player_input, player):
+def have_item_check(player_input):
     """checks if the user has the item they are trying to use
 
     PARAM player_input a string
@@ -175,6 +180,7 @@ def item_check(player_input, player):
     PRECONDITION player is a correctly formatted dictionary
     RETURN True if player doesnt have item, False if they do
     """
+    player = character.get_character_info()
     if player_input == 'use sword' and 'sword' in player['inventory']:
         return False
     elif player_input == 'use bread' and 'bread' in player['inventory']:
@@ -185,7 +191,7 @@ def item_check(player_input, player):
         return True
 
 
-def door_check(player_input, dungeon_map, player):
+def adjacent_door_check(player_input):
     """if user tries to interact with a door, checks if the door is adjacent
 
     PARAM player a correctly formatted dictionary
@@ -197,14 +203,16 @@ def door_check(player_input, dungeon_map, player):
     POSTCONDITION Prints nothing or an error message if input is incorrect
     RETURN True if error in input and False if no error
     """
-    if player_input == 'unlock door' and dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ' \
+    dungeon_map = map.get_map()
+    player = character.get_character_info()
+    if player_input == 'unlock door' and dungeon_map[player['column']][player['row'] - 1] == ' L ' \
             and 'key' in player['inventory']:
-        dungeon_map[player['xlocation']][player['ylocation'] - 1] = '   '
+        dungeon_map[player['column']][player['row'] - 1] = '   '
         return False
-    elif player_input == 'open door' and dungeon_map[player['xlocation']][player['ylocation'] + 1] == ' D ':
-        dungeon_map[player['xlocation']][player['ylocation'] + 1] = '   '
+    elif player_input == 'open door' and dungeon_map[player['column']][player['row'] + 1] == ' D ':
+        dungeon_map[player['column']][player['row'] + 1] = '   '
         return False
-    elif player_input == 'unlock door' and dungeon_map[player['xlocation']][player['ylocation'] - 1] == ' L ' \
+    elif player_input == 'unlock door' and dungeon_map[player['column']][player['row'] - 1] == ' L ' \
             and 'key' not in player['inventory']:
         print('You do not have a key to open that door')
         return True
@@ -225,7 +233,7 @@ def help_menu():
     print('[help] : opens the help menu')
 
 
-def take_item_check(player_input, player, dungeon_map):
+def take_item_check(player_input):
     """if user inputs to take an item checks if it is on the players tile
 
     PARAM player a correctly formatted dictionary
@@ -237,20 +245,22 @@ def take_item_check(player_input, player, dungeon_map):
     POSTCONDITION Prints nothing or an error message if input is incorrect
     RETURN True if error in input and False if no error
     """
-    if player_input == 'take key' and dungeon_map[player['xlocation']][player['ylocation']] == ' K ':
-        dungeon_map[player['xlocation']][player['ylocation']] = '###'
+    dungeon_map = map.get_map()
+    player = character.get_character_info()
+    if player_input == 'take key' and dungeon_map[player['column']][player['row']] == ' K ':
+        dungeon_map[player['column']][player['row']] = '###'
         player['inventory'].append('key')
         return False
-    elif player_input == 'take sword' and dungeon_map[player['xlocation']][player['ylocation']] == ' S ':
-        dungeon_map[player['xlocation']][player['ylocation']] = '...'
+    elif player_input == 'take sword' and dungeon_map[player['column']][player['row']] == ' S ':
+        dungeon_map[player['column']][player['row']] = '...'
         player['inventory'].append('sword')
         return False
-    elif player_input == 'take bread' and dungeon_map[player['xlocation']][player['ylocation']] == ' B ':
-        dungeon_map[player['xlocation']][player['ylocation']] = '   '
+    elif player_input == 'take bread' and dungeon_map[player['column']][player['row']] == ' B ':
+        dungeon_map[player['column']][player['row']] = '   '
         player['inventory'].append('bread')
         return False
-    elif player_input == 'take treasure' and dungeon_map[player['xlocation']][player['ylocation']] == ' C ':
-        dungeon_map[player['xlocation']][player['ylocation']] = '"""'
+    elif player_input == 'take treasure' and dungeon_map[player['column']][player['row']] == ' C ':
+        dungeon_map[player['column']][player['row']] = '"""'
         player['inventory'].append('treasure')
         return False
     else:
@@ -258,7 +268,7 @@ def take_item_check(player_input, player, dungeon_map):
         return True
 
 
-def collision_check(player_input, player, dungeon_map):
+def collision_check(player_input):
     """checks if there is a wall where the player is trying to move
 
     PARAM player a correctly formatted dictionary
@@ -271,18 +281,19 @@ def collision_check(player_input, player, dungeon_map):
     RETURN True if error in input and False if no error
     """
     unwalkable_terrain = ('---', ' | ', ' \ ', ' / ', '~~~', '|||', ' D ', ' L ')
-
-    if player_input == 'east' and dungeon_map[player['xlocation']][player['ylocation'] + 1] not in unwalkable_terrain:
-        player['ylocation'] += 1
+    dungeon_map = map.get_map()
+    player = character.get_character_info()
+    if player_input == 'east' and dungeon_map[player['column']][player['row'] + 1] not in unwalkable_terrain:
+        character.set_row(player['row'] + 1)
         return False
-    elif player_input == 'west' and dungeon_map[player['xlocation']][player['ylocation'] - 1] not in unwalkable_terrain:
-        player['ylocation'] -= 1
+    elif player_input == 'west' and dungeon_map[player['column']][player['row'] - 1] not in unwalkable_terrain:
+        character.set_row(player['row'] - 1)
         return False
-    elif player_input == 'north' and dungeon_map[player['xlocation'] - 1][player['ylocation']] not in unwalkable_terrain:
-        player['xlocation'] -= 1
+    elif player_input == 'north' and dungeon_map[player['column'] - 1][player['row']] not in unwalkable_terrain:
+        character.set_column(player['column'] - 1)
         return False
-    elif player_input == 'south' and dungeon_map[player['xlocation'] + 1][player['ylocation']] not in unwalkable_terrain:
-        player['xlocation'] += 1
+    elif player_input == 'south' and dungeon_map[player['column'] + 1][player['row']] not in unwalkable_terrain:
+        character.set_column(player['column'] + 1)
         return False
     else:
         print('You cant move in that direction')
@@ -292,36 +303,37 @@ def collision_check(player_input, player, dungeon_map):
 def main():
     moved_list = ['north', 'east', 'south', 'west']
     # load or create a character
-    player = character.get_user()
+    character.get_user()
+    # do same thing for map ( charactername_map.json )
+    # map.get_user_map()
 
     # prints initial map, character, and message
-    new_map = map.create_map()
     print('You are in an abandoned village in your search for a hidden treasure.')
     print('Type north, east, south, or west to move')
     print('Type help to see a list of other keywords you can use')
-    map.display_map(new_map, player)
-    character.print_character(player)
-    player_input = user_input(player, new_map)
+    map.display_map()
+    character.print_character()
+    player_input = user_input()
 
     # game loop continues until user inputs quit
     while player_input != 'quit':
-        print_message(player, new_map, player_input)
-        map.display_map(new_map, player)
+        print_message(player_input)
+        map.display_map()
 
         if player_input in moved_list:
-            if player['HitPoints'] < 10:
-                player['HitPoints'] += 1
-            monster.check_monster_encounter(player)
+            if character.get_hitpoints() < 10:
+                character.set_hitpoints(character.get_hitpoints() + 1)
+            monster.check_monster_encounter()
 
-        if player['HitPoints'] <= 0:
+        if character.get_hitpoints() <= 0:
             print('You died :(')
             break
 
-        character.print_character(player)
-        player_input = user_input(player, new_map)
+        character.print_character()
+        player_input = user_input()
 
     # saves user in a .json file
-    character.save_user(player)
+    character.save_user()
 
 
 if __name__ == '__main__':

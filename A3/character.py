@@ -1,27 +1,31 @@
 """character module"""
-
-
 import json
 
-character_info = {'name': '', 'class': '', 'HitPoints': 10, 'xlocation': 10, 'ylocation': 1, 'inventory': []}
+character_info = {'name': '', 'HitPoints': 10, 'row': 1, 'column': 10, 'inventory': []}
 
 
-def create_character(name):
-    """ Creates a dictionary with character name and 6 core attributes
-
-    PARAM syllables an int
-    PRECONDITION syllables must be a positive int
-    POSTCONDITION a correctly formatted character dictionary
-    RETURN correctly formatted character dictionary
-    """
-    global character_info
-    # Generate name and class for character_dict
-    character_info['name'] = name
-    character_info['class'] = class_selection()
+def get_character_info():
+    """returns character_info dictionary"""
     return character_info
 
 
-def print_character(character):
+def get_hitpoints():
+    return character_info['HitPoints']
+
+
+def set_hitpoints(hp):
+    character_info['HitPoints'] = hp
+
+
+def set_row(row):
+    character_info['row'] = row
+
+
+def set_column(column):
+    character_info['column'] = column
+
+
+def print_character():
     """ Prints character Hp and name
 
     PARAM character a dictionary
@@ -29,28 +33,7 @@ def print_character(character):
     POSTCONDITION character is printed
 
     """
-    print('Name:', character['name'], 'Hitpoints:', character['HitPoints'])
-
-
-def class_selection():
-    """ Asks user to select a class from a list of choices
-
-    RETURN a string with the inputted class in lowercase
-    """
-    class_choice = ''
-    class_list = ['barbarian', 'bard', 'cleric', 'druid', 'monk', 'rogue', 'warlock', 'fighter', 'paladin',
-                  'ranger', 'bloodhunter', 'wizard', 'sorcerer']
-
-    # Loop through class input until a correct class is entered
-    while class_choice.lower() not in class_list:
-        class_choice = input('Type in the class you want to select from this list:'
-                             '\nbarbarian\nbard\ncleric\ndruid\nmonk\nrogue\nwarlock\nfighter\npaladin\nranger'
-                             '\nbloodhunter\nwizard\nsorcerer\n')
-
-        if class_choice.lower() not in class_list:
-            print('You did not enter a correct class, try again')
-
-    return class_choice.lower()
+    print('Name:', character_info['name'], 'Hitpoints:', character_info['HitPoints'])
 
 
 def get_user():
@@ -59,6 +42,7 @@ def get_user():
     POSTCONDITION character with entered name is loaded or created
     RETURN player a character info dictionary
     """
+    global character_info
     character_name = input('Enter your character\'s name')
     filename = character_name + '.json'
     player = get_stored_user(filename)
@@ -66,7 +50,7 @@ def get_user():
         pass
     else:
         player = create_new_user(filename, character_name)
-    return player
+    character_info = player
 
 
 def get_stored_user(filename):
@@ -97,18 +81,19 @@ def create_new_user(filename, character_name):
     RETURN character info dictionary
     """
     with open(filename, 'w') as f_obj:
-        new_player = create_character(character_name)
-        return new_player
+        character_info['name'] = character_name
+        json.dump(character_info, f_obj)
+        return character_info
 
 
-def save_user(character_dict):
+def save_user():
     """saves the current users progress in a .json file
 
     PARAM character a dictionary
     PRECONDITION character is a dictionary with character info
     POSTCONDITION the character info dictionary is saved in a .json file
     """
-    filename = character_dict['name'] + '.json'
+    filename = character_info['name'] + '.json'
     with open(filename, 'w') as f_obj:
-        json.dump(character_dict, f_obj)
+        json.dump(character_info, f_obj)
 
