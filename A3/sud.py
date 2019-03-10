@@ -307,16 +307,16 @@ def collision_check(player_input):
 
     # Checks user move direction and whether that directions area is in un-walkable terrain
     if player_input == 'east' and dungeon_map[player['row']][player['column'] + 1] not in unwalkable_terrain:
-        character.set_row(player['column'] + 1)
+        character.set_column(player['column'] + 1)
         return False
     elif player_input == 'west' and dungeon_map[player['row']][player['column'] - 1] not in unwalkable_terrain:
-        character.set_row(player['column'] - 1)
+        character.set_column(player['column'] - 1)
         return False
     elif player_input == 'north' and dungeon_map[player['row'] - 1][player['column']] not in unwalkable_terrain:
-        character.set_column(player['row'] - 1)
+        character.set_row(player['row'] - 1)
         return False
     elif player_input == 'south' and dungeon_map[player['row'] + 1][player['column']] not in unwalkable_terrain:
-        character.set_column(player['row'] + 1)
+        character.set_row(player['row'] + 1)
         return False
     # User tried to move toward an un-walkable terrain, prints error
     else:
