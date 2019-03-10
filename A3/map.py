@@ -31,9 +31,9 @@ def display_map():
     POSTCONDITION 3x3 map portion is displayed
     """
     player = character.get_character_info()
-    for i in range(player['column'] - 1, player['column'] + 2):
-        for j in range(player['row'] - 1, player['row'] + 2):
-            if player['column'] == i and player['row'] == j:
+    for i in range(player['row'] - 1, player['row'] + 2):
+        for j in range(player['column'] - 1, player['column'] + 2):
+            if player['row'] == i and player['column'] == j:
                 print(' P ', end='')
             else:
                 print(dungeon_map[i][j], end='')
