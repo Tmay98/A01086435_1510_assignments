@@ -1,7 +1,7 @@
 """character module"""
 import json
 
-character_info = {'name': '', 'HitPoints': 10, 'row': 1, 'column': 10, 'inventory': []}
+character_info = {'name': '', 'HitPoints': 10, 'row': 10, 'column': 1, 'inventory': []}
 
 
 def get_character_info():
