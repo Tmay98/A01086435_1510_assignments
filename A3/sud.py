@@ -166,6 +166,7 @@ def user_input():
             error = adjacent_door_check(player_input)
         elif player_input == 'help':
             help_menu()
+            error = False
         elif player_input[0:3] == 'use':
             error = dont_have_item_check(player_input)
         elif player_input == 'quit':
