@@ -1,4 +1,22 @@
-"""character module"""
+"""character functions for sud module
+
+get_character_info: returns character_info dictionary
+get_hitpoints: returns player hitpoints
+set_hitpoints: sets player hitpoints to given value
+set_column: sets player column to given column
+set_row: sets player row to given row
+print_character: prints character name and hp
+get_user: player enters name and a character is loaded or created
+get_stored_info: loads a characters info from a file
+create_new_user: creates a new character with given name
+save_user: saves current user progress to a file
+
+"""
+
+# Tommy May
+# A01086435
+# March 10
+
 import json
 
 character_info = {'name': '', 'HitPoints': 10, 'row': 10, 'column': 1, 'inventory': []}

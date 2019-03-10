@@ -1,4 +1,18 @@
-"""Map functions for sud"""
+"""Map functions for sud module
+
+get_map: returns the dungeon_map
+set_map: sets value of map at given column and row
+display_map: displays a 3x3 portion of the map centered on the player
+get_user_map: either loads a map if it exists or creates one
+get_stored_map: loads an existing map
+create_new_map: creates initial map
+save_map: saves current map to a file
+
+"""
+
+# Tommy May
+# A01086435
+# March 10
 
 import character
 import json

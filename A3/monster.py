@@ -1,10 +1,22 @@
-"""monster functions for sud"""
+"""monster functions for sud module
+
+check_monster_encounter: Rolls a die with a 1/10 chance of encountering a monster
+monster_encounter: Asks user if they want to fight or run away from a monster
+run_away: runs away with 1/10 chance of taking 1 - 4 damagae from monster
+monster_fight: plays a monster fight to the death
+
+"""
+
+# Tommy May
+# A01086435
+# March 10
+
 import sud
 import character
 
 
 def check_monster_encounter() -> bool:
-    """rolls a dice with a 1/10 chance of encountering a monster
+    """rolls a die with a 1/10 chance of encountering a monster
 
     POSTCONDITION either plays a monster encounter or not depending on roll
     RETURN true if monster encountered false if not
