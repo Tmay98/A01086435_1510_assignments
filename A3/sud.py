@@ -24,7 +24,7 @@ import map
 import monster
 
 
-def roll_die(number_of_rolls, number_of_sides):
+def roll_die(number_of_rolls: int, number_of_sides: int) -> int:
     """ Rolls a die a specified number of times and adds them up
 
     PARAM number_of_rolls an int
@@ -44,7 +44,7 @@ def roll_die(number_of_rolls, number_of_sides):
     return random_total
 
 
-def print_message(player_input):
+def print_message(player_input: str):
     """Prints messages based on player input and location on map
 
     PARAM player a correctly formatted dictionary
@@ -144,7 +144,7 @@ def scenario_message():
         print('You are in the treasury')
 
 
-def user_input():
+def user_input() -> str:
     """Takes user input and returns it when a correct input is entered
 
     PARAM player a correctly formatted dictionary
@@ -176,7 +176,7 @@ def user_input():
     return player_input
 
 
-def dont_have_item_check(player_input):
+def dont_have_item_check(player_input: str) -> bool:
     """checks if the user has the item they are trying to use
 
     PARAM player_input a string
@@ -196,7 +196,7 @@ def dont_have_item_check(player_input):
         return True
 
 
-def adjacent_door_check(player_input):
+def adjacent_door_check(player_input: str) -> bool:
     """if user tries to interact with a door, checks if the door is adjacent
 
     PARAM player a correctly formatted dictionary
@@ -245,7 +245,7 @@ def help_menu():
     print('[help] : opens the help menu')
 
 
-def take_item_check(player_input):
+def take_item_check(player_input: str) -> bool:
     """if user inputs to take an item checks if it is on the players tile
 
     PARAM player a correctly formatted dictionary
@@ -289,7 +289,7 @@ def take_item_check(player_input):
         return True
 
 
-def collision_check(player_input):
+def collision_check(player_input: str) -> bool:
     """Checks if there is a wall where the player is trying to move
 
     PARAM player a correctly formatted dictionary

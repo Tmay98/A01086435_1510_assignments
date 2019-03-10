@@ -3,7 +3,7 @@ import sud
 import character
 
 
-def check_monster_encounter():
+def check_monster_encounter() -> bool:
     """rolls a dice with a 1/10 chance of encountering a monster
 
     POSTCONDITION either plays a monster encounter or not depending on roll

@@ -4,24 +4,24 @@ import json
 character_info = {'name': '', 'HitPoints': 10, 'row': 10, 'column': 1, 'inventory': []}
 
 
-def get_character_info():
+def get_character_info() -> dict:
     """returns character_info dictionary"""
     return character_info
 
 
-def get_hitpoints():
+def get_hitpoints() -> int:
     return character_info['HitPoints']
 
 
-def set_hitpoints(hp):
+def set_hitpoints(hp: int):
     character_info['HitPoints'] = hp
 
 
-def set_row(row):
+def set_row(row: int):
     character_info['row'] = row
 
 
-def set_column(column):
+def set_column(column: int):
     character_info['column'] = column
 
 

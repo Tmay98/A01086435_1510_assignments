@@ -17,11 +17,11 @@ dungeon_map = [[' / ', '---', '---', '---', '---', '---', '---', '---', '---', '
                [' \ ', '---', '---', '---', '---', '---', '---', '---', '---', '---', '---', ' / ']]
 
 
-def get_map():
+def get_map() -> list:
     return dungeon_map
 
 
-def set_map(column, row, value):
+def set_map(column: int, row: int, value: str):
     dungeon_map[column][row] = value
 
 
