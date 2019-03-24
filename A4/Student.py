@@ -6,7 +6,7 @@
 
 class Student:
 
-    def __init__(self, first_name: str, last_name: str, student_number: str, status: bool, *grades: int):
+    def __init__(self, first_name: str, last_name: str, student_number: str, status: bool, grades: list):
         if not first_name.isalpha():
             raise ValueError("You entered an incorrect first name")
         else:
@@ -23,6 +23,10 @@ class Student:
             raise ValueError("You did not enter a correct status")
         else:
             self.status = status
+        for grade in grades:
+            grade = int(grade)
+            if grade < 0 or grade > 100:
+                raise ValueError("You did not enter correct grades")
         self.grades = grades
 
     def get_first_name(self):
@@ -54,8 +58,19 @@ def add_student(student_info):
 
 
 def file_write(student):
-    with open('students.txt', 'a') as f_obj:
-        f_obj.write(student)
+    try:
+        grades = ''
+        for grade in student.get_grades():
+            grades += grade + ' '
+        with open('students.txt', 'a') as f_obj:
+            f_obj.write("\n" + student.get_first_name() + " " + student.get_last_name() + " " +
+                        student.get_student_number() + " " + str(student.get_status()) +
+                        " " + grades)
+    except FileNotFoundError:
+        return False
+    else:
+        return True
+
 
 
 
@@ -63,7 +78,7 @@ def file_write(student):
 
 
 def main():
-    student1 = 'tom may A01086435 true'
+    student1 = 'tom may A01086435 true 12 21 32'
     add_student(student1)
 
 
