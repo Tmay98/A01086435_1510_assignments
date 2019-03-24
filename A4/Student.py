@@ -87,39 +87,51 @@ def file_delete_student(student_number: str) -> bool:
 
 def calculate_class_average():
     students_list = file_read()
-    grades = []
+    if len(students_list) == 0:
+        print('No students in file')
+        return
     class_average = 0
+    student_average_list = calculate_students_average(students_list)
+    for average in student_average_list:
+        class_average += int(average)
+    class_average = round(class_average / len(students_list), 2)
+    print("the class average is: ", class_average, "%\n")
+
+
+def calculate_students_average(students_list):
+    student_average_list = []
     for i in range(0, len(students_list)):
         student = students_list[i].split()
-        for j in range(4, len(student)):
-            grades.append(student[j])
-    for grade in grades:
-        class_average += int(grade)
-    return round(class_average / len(students_list), 2)
-
+        total_grades = 0
+        if len(student) > 4:
+            for j in range(4, len(student)):
+                total_grades += int(student[j])
+            student_average_list.append(total_grades / (len(student) - 4))
+    return student_average_list
 
 def file_read() -> list:
     try:
         with open("students.txt") as f_obj:
             students_list = f_obj.readlines()
     except FileNotFoundError:
-        print('no students in file')
+        print('no students in file\n')
         return []
     else:
-        del students_list[0]
-        return students_list
+        if len(students_list) > 0:
+            del students_list[0]
+            return students_list
+        return []
 
 
 def print_class_list():
     try:
         with open("students.txt") as f_obj:
-            print('Students list:\n')
+            print('Students list:')
             for line in f_obj:
-                print(f_obj.readline())
+                print(line)
+            print()
     except FileNotFoundError:
-        print('no students in file')
-
-
+        print('no students in file\n')
 
 
 def main():
@@ -131,5 +143,7 @@ def main():
     add_student(student2)
     print(calculate_class_average())
     print_class_list()
+
+
 if __name__ == "__main__":
     main()
