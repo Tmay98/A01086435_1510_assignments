@@ -110,6 +110,15 @@ def file_read() -> list:
         return students_list
 
 
+def print_class_list():
+    try:
+        with open("students.txt") as f_obj:
+            print('Students list:\n')
+            for line in f_obj:
+                print(f_obj.readline())
+    except FileNotFoundError:
+        print('no students in file')
+
 
 
 
@@ -121,6 +130,6 @@ def main():
     add_student(student1)
     add_student(student2)
     print(calculate_class_average())
-
+    print_class_list()
 if __name__ == "__main__":
     main()
