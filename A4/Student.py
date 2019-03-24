@@ -72,6 +72,18 @@ def file_write(student):
         return True
 
 
+def file_delete_student(student_number: str) -> bool:
+    with open("students.txt", "r+") as f_obj:
+        lines = f_obj.readlines()
+        f_obj.seek(0)
+        if student_number in str(lines):
+            for line in lines:
+                if student_number not in str(line):
+                    f_obj.write(line)
+            f_obj.truncate()
+            return True
+        return False
+
 
 
 
@@ -79,8 +91,14 @@ def file_write(student):
 
 def main():
     student1 = 'tom may A01086435 true 12 21 32'
+    student2 = 'tom may A01086436 true 12 21 32'
+    student3 = 'tom may A01086437 true 12 21 32'
+    student4 = 'tom may A01086438 true 12 21 32'
     add_student(student1)
-
+    add_student(student2)
+    add_student(student3)
+    add_student(student4)
+    file_delete_student('A01086435')
 
 if __name__ == "__main__":
     main()
