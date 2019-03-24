@@ -47,12 +47,14 @@ class Student:
 
 def add_student(student_info):
     student_info = student_info.split()
-    student_info[3] = bool(student_info[3].upper())
     try:
+        student_info[3] = bool(student_info[3].upper())
         new_student = Student(student_info[0], student_info[1], student_info[2], student_info[3], student_info[4:])
     except ValueError:
         print('You did not enter correct info for the new student')
         return
+    except IndexError:
+        print('You did not enter all required fields for the student (FirstName, LastName, Student#, standing\n')
     else:
         file_write(new_student)
 
@@ -94,7 +96,7 @@ def calculate_class_average():
     student_average_list = calculate_students_average(students_list)
     for average in student_average_list:
         class_average += int(average)
-    class_average = round(class_average / len(students_list), 2)
+    class_average = round(class_average / len(student_average_list), 2)
     print("the class average is: ", class_average, "%\n")
 
 
@@ -108,6 +110,7 @@ def calculate_students_average(students_list):
                 total_grades += int(student[j])
             student_average_list.append(total_grades / (len(student) - 4))
     return student_average_list
+
 
 def file_read() -> list:
     try:
@@ -133,6 +136,37 @@ def print_class_list():
     except FileNotFoundError:
         print('no students in file\n')
 
+
+def edit_student_grades(student_number):
+    with open("students.txt", "r+") as f_obj:
+        lines = f_obj.readlines()
+        f_obj.seek(0)
+        if student_number in str(lines):
+            for line in lines:
+                if student_number not in str(line):
+                    f_obj.write(line)
+                else:
+                    add_grades_to_student(f_obj, line)
+            f_obj.truncate()
+            return True
+        return False
+
+
+def add_grades_to_student(f_obj, line):
+    f_obj.write(line[:-2])
+    while True:
+        try:
+            grade = int(input('Enter a grade to add to student type anything else to stop adding\n'))
+        except ValueError:
+            print('exiting edit\n')
+            break
+        if grade < 0 or grade > 100:
+            print('You entered an incorrect grade, exiting edit\n')
+            break
+        else:
+            f_obj.write(" " + str(grade))
+    f_obj.write('\n')
+    print('All grades were added to the student')
 
 def main():
     student1 = 'tom may A01086435 true 50'
