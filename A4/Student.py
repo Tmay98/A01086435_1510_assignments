@@ -25,6 +25,21 @@ class Student:
             self.status = status
         self.grades = grades
 
+    def get_first_name(self):
+        return self.first_name
+
+    def get_last_name(self):
+        return self.last_name
+
+    def get_student_number(self):
+        return self.student_number
+
+    def get_status(self):
+        return self.status
+
+    def get_grades(self):
+        return self.grades
+
 
 def add_student(student_info):
     student_info = student_info.split()
