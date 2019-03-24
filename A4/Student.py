@@ -85,20 +85,35 @@ def file_delete_student(student_number: str) -> bool:
         return False
 
 
+def calculate_class_average():
+    try:
+        with open("students.txt") as f_obj:
+            students_list = f_obj.readlines()
+    except FileNotFoundError:
+        print('no students in file')
+    else:
+        grades = []
+        class_average = 0
+        for i in range(1, len(students_list)):
+            student = students_list[i].split()
+            for j in range(4, len(student)):
+                grades.append(student[j])
+        for grade in grades:
+            class_average += int(grade)
+        return class_average / (len(students_list) - 1)
+
 
 
 
 
 def main():
-    student1 = 'tom may A01086435 true 12 21 32'
-    student2 = 'tom may A01086436 true 12 21 32'
+    student1 = 'tom may A01086435 true 50'
+    student2 = 'tom may A01086436 true 100'
     student3 = 'tom may A01086437 true 12 21 32'
     student4 = 'tom may A01086438 true 12 21 32'
     add_student(student1)
     add_student(student2)
-    add_student(student3)
-    add_student(student4)
-    file_delete_student('A01086435')
+    print(calculate_class_average())
 
 if __name__ == "__main__":
     main()
