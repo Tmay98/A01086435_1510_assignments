@@ -100,7 +100,7 @@ def calculate_class_average():
                 grades.append(student[j])
         for grade in grades:
             class_average += int(grade)
-        return class_average / (len(students_list) - 1)
+        return round(class_average / (len(students_list) - 1), 2)
 
 
 
