@@ -1,0 +1,56 @@
+""" student class module"""
+
+# Tommy May
+# A01086435
+
+
+class Student:
+
+    def __init__(self, first_name: str, last_name: str, student_number: str, status: bool, *grades: int):
+        if not first_name.isalpha():
+            raise ValueError("You entered an incorrect first name")
+        else:
+            self.first_name = first_name
+        if not last_name.isalpha():
+            raise ValueError("You entered an incorrect last name")
+        else:
+            self.last_name = last_name
+        if not student_number[0] == 'A' or not student_number[1:].isnumeric() or not len(student_number) == 9:
+            raise ValueError("You entered an incorrect student number")
+        else:
+            self.student_number = student_number
+        if not type(status) == bool:
+            raise ValueError("You did not enter a correct status")
+        else:
+            self.status = status
+        self.grades = grades
+
+
+def add_student(student_info):
+    student_info = student_info.split()
+    student_info[3] = bool(student_info[3].upper())
+    try:
+        new_student = Student(student_info[0], student_info[1], student_info[2], student_info[3], student_info[4:])
+    except ValueError:
+        print('You did not enter correct info for the new student')
+        return
+    else:
+        file_write(new_student)
+
+
+def file_write(student):
+    with open('students.txt', 'a') as f_obj:
+        f_obj.write(student)
+
+
+
+
+
+
+def main():
+    student1 = 'tom may A01086435 true'
+    add_student(student1)
+
+
+if __name__ == "__main__":
+    main()

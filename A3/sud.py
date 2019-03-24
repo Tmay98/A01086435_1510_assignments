@@ -18,7 +18,7 @@ collision_check: checks if there is a wall where the player is trying to move
 # 2019 March 05
 
 import random
-import json
+import doctest
 import character
 import map
 import monster
@@ -54,6 +54,11 @@ def print_message(player_input: str):
     PRECONDITION dungeon_map is a list with lists with 12 elements each
     PRECONDITION player_input is a correct input string
     POSTCONDITION A message is printed based on input given
+
+    >>> print_message('use bread')
+    You eat the bread and return to full HP
+    >>> print_message('open door')
+    you open the door
     """
     # contains keywords for movement
     moved_list = ['north', 'east', 'south', 'west']
@@ -94,6 +99,7 @@ def item_on_ground_message():
     PRECONDITION player is a correctly formatted dictionary
     PRECONDITION dungeon_map is a list with lists with 12 elements each
     POSTCONDITION prints a message about what item is on the ground is printed
+
     """
     dungeon_map = map.get_map()
     player = character.get_character_info()
@@ -326,6 +332,7 @@ def collision_check(player_input: str) -> bool:
 
 
 def main():
+    doctest.testmod()
     moved_list = ['north', 'east', 'south', 'west']
     # load or create a character and map
     character.get_user()
