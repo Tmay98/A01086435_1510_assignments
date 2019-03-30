@@ -35,3 +35,14 @@ class TestCalculate_class_average(TestCase):
         actual_output = mock_output.getvalue()
         expected_output = 'No students in file\n'
         self.assertEqual(actual_output, expected_output)
+
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_all_students_without_grades(self, mock_output):
+        with open('students.txt', 'w') as f_obj:
+            f_obj.write('person three A01086435 True\n')
+            f_obj.write('person two A01086436 True\n')
+            f_obj.write('person three A01086437 True\n')
+        calculate_class_average()
+        actual_output = mock_output.getvalue()
+        expected_output = 'No students with grades found\n'
+        self.assertEqual(actual_output, expected_output)
