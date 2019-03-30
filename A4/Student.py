@@ -14,27 +14,11 @@ class Student:
         :param status:
         :param grades:
         """
-        if not first_name.isalpha():
-            raise ValueError("You entered an incorrect first name")
-        else:
-            self.first_name = first_name
-        if not last_name.isalpha():
-            raise ValueError("You entered an incorrect last name")
-        else:
-            self.last_name = last_name
-        if not student_number[0] == 'A' or not student_number[1:].isnumeric() or not len(student_number) == 9:
-            raise ValueError("You entered an incorrect student number")
-        else:
-            self.student_number = student_number
-        if not type(status) == bool:
-            raise ValueError("You did not enter a correct status")
-        else:
-            self.status = status
-        for grade in grades:
-            grade = int(grade)
-            if grade < 0 or grade > 100:
-                raise ValueError("You did not enter correct grades")
-        self.grades = grades
+        self.first_name = check_valid_name(first_name)
+        self.last_name = check_valid_name(last_name)
+        self.student_number = check_valid_student_number(student_number)
+        self.status = status
+        self.grades = check_valid_grades(grades)
 
     def __str__(self):
         return "\n" + self.first_name + " " + self.last_name + " " +\
@@ -55,6 +39,35 @@ class Student:
 
     def get_grades(self):
         return self.grades
+
+
+def check_valid_student_number(student_number):
+    if not student_number[0] == 'A' or not student_number[1:].isnumeric() or not len(student_number) == 9:
+        raise ValueError("You entered an incorrect student number")
+    else:
+        return student_number
+
+
+def check_valid_name(first_name):
+    if not first_name.isalpha():
+        raise ValueError("You entered an incorrect first name")
+    else:
+        return first_name
+
+
+def is_bool(status):
+    if not type(status) == bool:
+        raise ValueError("You did not enter a correct status")
+    else:
+        return status
+
+
+def check_valid_grades(grades):
+    for grade in grades:
+        grade = int(grade)
+        if grade < 0 or grade > 100:
+            raise ValueError("You did not enter correct grades")
+    return grades
 
 
 def main():
