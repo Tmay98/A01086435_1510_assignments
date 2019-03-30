@@ -48,11 +48,11 @@ def check_valid_student_number(student_number):
         return student_number
 
 
-def check_valid_name(first_name):
-    if not first_name.isalpha():
-        raise ValueError("You entered an incorrect first name")
+def check_valid_name(name):
+    if not name.isalpha():
+        raise ValueError("You entered an incorrect name")
     else:
-        return first_name
+        return name
 
 
 def is_bool(status):
