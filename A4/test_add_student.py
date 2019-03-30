@@ -21,7 +21,7 @@ class TestAdd_student(TestCase):
     def test_add_student_incorrect_first_name(self, mock_stdout, mock_input):
         add_student()
         actual_output = mock_stdout.getvalue()
-        expected_output = 'You entered an incorrect first name\n'
+        expected_output = 'You entered an incorrect name\n'
         self.assertEqual(expected_output, actual_output)
 
     @patch('builtins.input', side_effect=['tommy ;3[2f A01086435 True'])
@@ -29,7 +29,7 @@ class TestAdd_student(TestCase):
     def test_add_student_incorrect_last_name(self, mock_stdout, mock_input):
         add_student()
         actual_output = mock_stdout.getvalue()
-        expected_output = 'You entered an incorrect last name\n'
+        expected_output = 'You entered an incorrect name\n'
         self.assertEqual(expected_output, actual_output)
 
     @patch('builtins.input', side_effect=['tommy may A013gvf6435 True'])
