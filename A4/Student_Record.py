@@ -113,15 +113,18 @@ def calculate_class_average():
     if len(students_list) == 0:
         print('No students in file')
         return
-    class_average = 0
     # calculate all students average individually and add them to student_average_list
     student_average_list = calculate_students_average(students_list)
     # calculates and prints all students combined average
+    class_average = 0
     for average in student_average_list:
         class_average += int(average)
-    class_average = round(class_average / len(student_average_list), 2)
-    print("the class average is: ", class_average, "%\n")
-
+    if student_average_list:
+        class_average = round(class_average / len(student_average_list), 2)
+        print("the class average is:", class_average, "%\n")
+    else:
+        print('No students with grades found')
+        
 
 def calculate_students_average(students_list):
     """Calculates all students averages and returns a list of them
