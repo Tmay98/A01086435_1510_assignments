@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Record import convert_to_bool
+from Student_Management_System.Student_Creation import convert_to_bool
 
 
 class TestConvert_to_bool(TestCase):

@@ -1,6 +1,5 @@
 from unittest import TestCase
-from Student_Record import add_student
-from Student import Student
+from Student_Management_System.Student_Creation import add_student
 from unittest.mock import patch
 import io
 

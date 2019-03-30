@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from Student_Record import file_delete_student
+from Student_Management_System.Student_Removal import file_delete_student
 from Student import Student
 
 

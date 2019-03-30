@@ -1,6 +1,5 @@
 from unittest import TestCase
-from Student_Record import delete_student_in_file
-from Student import Student
+from Student_Management_System.Student_Removal import delete_student_in_file
 
 
 class TestDelete_student_in_file(TestCase):

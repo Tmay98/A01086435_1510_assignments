@@ -3,7 +3,10 @@
 # Tommy May
 # A01086435
 
-import Student_Record
+import Student_Creation
+import Student_Updating
+import Student_Removal
+import Student_Read
 
 
 def main():
@@ -12,15 +15,15 @@ def main():
         selection = input("Select an option in the menu:\n1. Add student\n2. Delete student\n"
                           "3. Calculate class avg\n4. Print class list\n5. Edit student grades\n6: Quit\n")
         if selection == '1':
-            Student_Record.add_student()
+            Student_Creation.add_student()
         elif selection == '2':
-            Student_Record.file_delete_student()
+            Student_Removal.file_delete_student()
         elif selection == '3':
-            Student_Record.calculate_class_average()
+            Student_Read.print_class_average()
         elif selection == '4':
-            Student_Record.print_class_list()
+            Student_Read.print_class_list()
         elif selection == '5':
-            Student_Record.edit_student_grades()
+            Student_Updating.edit_student_grades()
         elif selection == '6':
             continue
         else:
