@@ -7,6 +7,7 @@ class TestDelete_student_in_file(TestCase):
 
     def test_delete_student_in_file(self):
         delete_student_number = 'A01086436'
+        open('students.txt', 'w').close()
         with open('students.txt', 'r+') as f_obj:
             f_obj.write('Tommy May A01086435 True\nAnother Student A01086436 False\n')
             f_obj.seek(0)
