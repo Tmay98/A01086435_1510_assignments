@@ -10,6 +10,9 @@ class TestUser_input(TestCase):
 
     @patch('builtins.input', side_effect=['east'])
     def test_directional_input(self, mock_input):
+        character.set_column(1)
+        character.set_row(2)
+        map.set_map(2, 2, '   ')
         self.assertEqual(user_input(), 'east')
 
     @patch('builtins.input', side_effect=['take key'])

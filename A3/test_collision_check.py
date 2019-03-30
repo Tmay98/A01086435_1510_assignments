@@ -9,6 +9,7 @@ import map
 class TestCollision_check(TestCase):
 
     def test_collision(self):
+        map.reset_map()
         character.set_row(6)
         character.set_column(4)
         self.assertTrue(collision_check('north'))

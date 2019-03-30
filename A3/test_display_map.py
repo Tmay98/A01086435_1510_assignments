@@ -10,6 +10,9 @@ class TestDisplay_map(TestCase):
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_displays_3x3_portion(self, mock_output):
+        character.set_row(10)
+        character.set_column(1)
+        map.reset_map()
         display_map()
         expected_output = ' | ------\n\n' \
                           ' |  P    \n\n' \
