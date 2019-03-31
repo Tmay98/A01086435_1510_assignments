@@ -16,23 +16,39 @@ def edit_student_grades():
     try:
         # checks if user input was a valid student number
         student_number = Student.check_valid_student_number(student_number)
+        # looks for student in file, if it exists adds grades to them
+        student_in_file = check_if_student_in_file(student_number)
     except ValueError as e:
         print(e)
         return False
+    except FileNotFoundError:
+        print('File students.txt does not exist')
+        return False
+    else:
+        return student_in_file
 
+
+def check_if_student_in_file(student_number):
+    """Checks if student number exists in students.txt
+
+    PARAM: student_number a string
+    PRECONDITION: student_number must be a correctly formatted student_number
+    POSTCONDITION: executes find_student if student exists
+    RETURN: True if student exists, false otherwise
+    """
     with open("students.txt", "r+") as f_obj:
         lines = f_obj.readlines()
         f_obj.seek(0)
         # checks if specified student is in students.txt
         if student_number in str(lines):
             # goes through lines 1 by 1 writing all students and adding grades to the specified student
-            find_student_to_add_grades(f_obj, lines, student_number)
+            find_student(f_obj, lines, student_number)
             return True
-        print('No students in file')
+        print('student with that student number is not in the file')
         return False
 
 
-def find_student_to_add_grades(f_obj, lines, student_number):
+def find_student(f_obj, lines, student_number):
     """ Writes all lines to file and asks user for grades when the specified student is found
 
     PARAM: f_obj a file object
