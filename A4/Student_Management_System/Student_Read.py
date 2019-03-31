@@ -55,6 +55,7 @@ def print_class_list():
     try:
         with open("students.txt") as f_obj:
             print('Students list:')
+            # loop through all lines in students.txt
             for line in f_obj:
                 # if the line isn't empty prints the line
                 if line != '\n':

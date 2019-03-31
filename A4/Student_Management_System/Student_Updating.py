@@ -81,7 +81,8 @@ def add_grades_to_student(f_obj, line: str):
     while True:
         try:
             # converts grade input to int
-            grade = int(input('Enter a grade to add to student type anything else to stop adding\n').strip())
+            grade = int(input('Enter a grade between 0 and 100'
+                              ' to add to student type anything else to stop adding\n').strip())
         except ValueError:
             print('non integer grade entered, exiting edit\n')
             break
