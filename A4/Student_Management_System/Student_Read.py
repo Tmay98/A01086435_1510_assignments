@@ -19,7 +19,7 @@ def print_class_average():
         class_average += int(average)
     if student_average_list:
         class_average = round(class_average / len(student_average_list), 2)
-        print("the class average is:", class_average, "%\n")
+        print("the class average is: %.2f%%\n" % class_average)
     else:
         print('No students with grades found')
 

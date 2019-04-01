@@ -13,7 +13,7 @@ class TestCalculate_class_average(TestCase):
             f_obj.write('person two A01086436 True 100 60\n')
         print_class_average()
         actual_output = mock_output.getvalue()
-        expected_output = 'the class average is: 80.0 %\n\n'
+        expected_output = 'the class average is: 80.00%\n\n'
         self.assertEqual(actual_output, expected_output)
 
     @patch('sys.stdout', new_callable=io.StringIO)
@@ -24,7 +24,7 @@ class TestCalculate_class_average(TestCase):
             f_obj.write('person three A01086437 True\n')
         print_class_average()
         actual_output = mock_output.getvalue()
-        expected_output = 'the class average is: 80.0 %\n\n'
+        expected_output = 'the class average is: 80.00%\n\n'
         self.assertEqual(actual_output, expected_output)
 
     @patch('sys.stdout', new_callable=io.StringIO)
