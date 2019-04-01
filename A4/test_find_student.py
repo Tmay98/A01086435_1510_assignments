@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Management_System.Student_Updating import find_student
+from Student_Updating import find_student
 from unittest.mock import patch
 
 

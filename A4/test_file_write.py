@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Management_System.Student_Creation import file_write
+from Student_Creation import file_write
 from Student import Student
 
 

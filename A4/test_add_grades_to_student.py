@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Management_System.Student_Updating import add_grades_to_student
+from Student_Updating import add_grades_to_student
 from Student import Student
 from unittest.mock import patch
 import io

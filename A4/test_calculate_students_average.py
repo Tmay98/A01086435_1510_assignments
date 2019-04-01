@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Management_System.Student_Read import calculate_students_average
+from Student_Read import calculate_students_average
 
 
 class TestCalculate_students_average(TestCase):

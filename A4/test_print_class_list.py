@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Management_System.Student_Read import print_class_list
+from Student_Read import print_class_list
 from unittest.mock import patch
 import io
 import os
