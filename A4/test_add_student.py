@@ -6,7 +6,7 @@ import io
 
 class TestAdd_student(TestCase):
 
-    @patch('builtins.input', side_effect=['tommy may A01086435'])
+    @patch('builtins.input', side_effect=['Tommy May A01086435'])
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_add_student_not_enough_input(self, mock_stdout, mock_input):
         add_student()
