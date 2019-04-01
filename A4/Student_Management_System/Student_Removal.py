@@ -15,8 +15,8 @@ def file_delete_student() -> bool:
     # Asks for student number to delete
     delete_student_number = input('Enter the student number of the student to be deleted\n')
     try:
-        # checks if user input was a valid student number
-        delete_student_number = Student.check_valid_student_number(delete_student_number)
+        # checks if user input was a valid student number and raises an error if it is invalid
+        Student.check_valid_student_number(delete_student_number)
     except ValueError as e:
         print(e)
         return False

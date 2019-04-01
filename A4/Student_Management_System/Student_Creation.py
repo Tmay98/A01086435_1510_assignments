@@ -18,7 +18,8 @@ def add_student():
     try:
         # converts status to a bool and tries to create a new student object
         student_info[3] = convert_to_bool(student_info[3])
-        new_student = Student.Student(student_info[0], student_info[1], student_info[2], student_info[3], student_info[4:])
+        new_student = Student.Student(student_info[0], student_info[1],
+                                      student_info[2], student_info[3], student_info[4:])
     except ValueError as e:
         print(e)
     except IndexError:

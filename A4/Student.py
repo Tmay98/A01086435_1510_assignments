@@ -14,11 +14,14 @@ class Student:
         :param status:
         :param grades:
         """
-        self.first_name = check_valid_name(first_name)
-        self.last_name = check_valid_name(last_name)
-        self.student_number = check_valid_student_number(student_number)
+        if check_valid_name(first_name) and check_valid_name(last_name):
+            self.first_name = first_name.capitalize()
+            self.last_name = last_name.capitalize()
+        if check_valid_student_number(student_number):
+            self.student_number = student_number
+        if check_valid_grades(grades):
+            self.grades = grades
         self.status = status
-        self.grades = check_valid_grades(grades)
 
     def __str__(self):
         return "\n" + self.first_name + " " + self.last_name + " " +\
@@ -45,21 +48,21 @@ def check_valid_student_number(student_number):
     if not student_number[0] == 'A' or not student_number[1:].isnumeric() or not len(student_number) == 9:
         raise ValueError("You entered an incorrect student number")
     else:
-        return student_number
+        return True
 
 
 def check_valid_name(name):
     if not name.isalpha():
         raise ValueError("You entered an incorrect name")
     else:
-        return name
+        return True
 
 
 def is_bool(status):
     if not type(status) == bool:
         raise ValueError("You did not enter a correct status")
     else:
-        return status
+        return True
 
 
 def check_valid_grades(grades):
@@ -67,7 +70,7 @@ def check_valid_grades(grades):
         grade = int(grade)
         if grade < 0 or grade > 100:
             raise ValueError("You did not enter correct grades")
-    return grades
+    return True
 
 
 def main():
