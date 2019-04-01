@@ -14,8 +14,8 @@ def edit_student_grades():
     """
     student_number = input('Enter the student number of the student to add grades to\n')
     try:
-        # checks if user input was a valid student number
-        student_number = Student.check_valid_student_number(student_number)
+        # checks if user input was a valid student number and raises an error if it is invalid
+        Student.check_valid_student_number(student_number)
         # looks for student in file, if it exists adds grades to them
         student_in_file = check_if_student_in_file(student_number)
     except ValueError as e:
