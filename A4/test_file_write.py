@@ -1,6 +1,7 @@
 from unittest import TestCase
 from Student_Read_Write import file_write
 from Student import Student
+import os
 
 
 class TestFile_write(TestCase):
@@ -15,6 +16,7 @@ class TestFile_write(TestCase):
         with open('students.txt', 'r') as f_obj:
             actual_output = f_obj.read()
         self.assertEqual(expected_output, actual_output)
+        os.remove('students.txt')
 
     def test_file_write_appends(self):
         expected_output = 'stuff\nTommy May A01086435 True 90'
@@ -24,4 +26,5 @@ class TestFile_write(TestCase):
         with open('students.txt', 'r') as f_obj:
             actual_output = f_obj.read()
         self.assertEqual(expected_output, actual_output)
+        os.remove('students.txt')
 

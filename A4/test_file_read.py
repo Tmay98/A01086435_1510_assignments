@@ -19,6 +19,7 @@ class TestFile_read(TestCase):
         actual_result[1] = str(actual_result[1])
         expected_result = [str(self.testStudent1), str(self.testStudent2)]
         self.assertEqual(expected_result, actual_result)
+        os.remove('students.txt')
 
     def test_empty_file(self):
         with open('students.txt', 'w') as f_obj:
@@ -26,6 +27,7 @@ class TestFile_read(TestCase):
         actual_result = file_read()
         expected_result = []
         self.assertEqual(expected_result, actual_result)
+        os.remove('students.txt')
 
     def test_file_doesnt_exist(self):
         try:

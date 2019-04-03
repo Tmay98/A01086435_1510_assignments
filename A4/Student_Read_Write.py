@@ -9,7 +9,10 @@ from Student import Student
 def print_class_average(students_list):
     """Calculates class average and prints it
 
+    PARAM: students_list a list of student objects
+    PRECONDITION: students_list must be a list of student objects
     POSTCONDITION: if there is 1 or more students calculate the class average and print it
+    RETURN: None if no students found
     """
     # returns None if no students are found
     if len(students_list) == 0:
@@ -31,8 +34,8 @@ def print_class_average(students_list):
 def calculate_each_students_average(students_list):
     """Calculates all students averages and returns a list of them
 
-    PARAM: students_list is a list
-    PRECONDITION: student list must be a list of correctly formatted students
+    PARAM: students_list a list of student objects
+    PRECONDITION: students_list must be a list of student objects
     POSTCONDITION: all students independent averages are calculated and appended to students_average_list
     RETURN: list with all students averages
 
@@ -49,9 +52,9 @@ def calculate_each_students_average(students_list):
 
 
 def print_class_list():
-    """prints the class list
+    """Prints the class list
 
-    POSTCONDITION: reads students.txt and prints all lines, excluding empty lines
+    POSTCONDITION: reads students.txt and prints all lines, excluding empty lines.
     """
     try:
         with open("students.txt") as f_obj:
@@ -66,6 +69,10 @@ def print_class_list():
 
 
 def file_read():
+    """ Reads students.txt and creates student objects from it and appends them to students_list
+
+    POSTCONDITION: all students from students.txt added to students_list
+    """
     students_list = []
     try:
         with open('students.txt') as f_obj:
@@ -83,7 +90,9 @@ def file_read():
 def add_student(students_list: list):
     """Creates a new student object and writes it to students_list and students.txt
 
-    POSTCONDITION: if no errors are found the new student object is added to students.txt
+    PARAM: students_list a list of student objects
+    PRECONDITION: students_list must be a list of student objects
+    POSTCONDITION: if no errors are found the new student object is added to students.txt and students_list
     """
     # takes student info input and splits it into a list
     student_info = input('Enter the information for the new student in format:\n'
@@ -113,15 +122,21 @@ def file_write(student: Student):
     PARAM: student a student object
     PRECONDITION: student must be a student object
     POSTCONDITION: student is added to file students.txt
-    RETURN: True or False depending on if student was successfully added
     """
     with open('students.txt', 'a') as f_obj:
         f_obj.write(str(student))
     print('student added to file')
-    return True
 
 
 def check_if_student_number_exists(student_number, students_list):
+    """Goes through students_list and raises a ValueError if student_number is inside it\
+
+    PARAM: students_list a list of student objects
+    PRECONDITION: students_list must be a list of student objects
+    PARAM: student_number is a string
+    PRECONDITION: student_number is a correctly formatted student number
+    POSTCONDITION: raises ValueError if student_number exists
+    """
     for student in students_list:
         if student.get_student_number() == student_number:
             raise ValueError('A student with that student number already exists')

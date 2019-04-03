@@ -15,6 +15,7 @@ class TestPrint_class_list(TestCase):
         expected_result = 'Students list:\nstudent one A01086435 True 90 50\n\nstudent two A01086436 True 80 70\n'
         actual_result = mock_output.getvalue()
         self.assertEqual(expected_result, actual_result)
+        os.remove('students.txt')
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_file_not_found(self, mock_output):

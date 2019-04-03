@@ -2,6 +2,7 @@ from unittest import TestCase
 from Student_Read_Write import add_student
 from unittest.mock import patch
 import io
+import os
 
 
 class TestAdd_student(TestCase):
@@ -46,3 +47,4 @@ class TestAdd_student(TestCase):
         actual_output = mock_stdout.getvalue()
         expected_output = 'student added to file\n'
         self.assertEqual(expected_output, actual_output)
+        os.remove('students.txt')

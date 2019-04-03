@@ -7,6 +7,7 @@ class TestStudent(TestCase):
     def setUp(self):
         self.testStudent1 = Student('Tommy', 'May', 'A01086435', True, [90])
         self.testStudent2 = Student('Tommy', 'May', 'A01086435', True, [])
+        self.testStudent3 = Student('Tommy', 'May', 'A01086435', True, [90, 85, 95])
 
     def test_get_first_name(self):
         expected_first_name = 'Tommy'
@@ -81,3 +82,14 @@ class TestStudent(TestCase):
             new_student = Student('name', 'name', 'A01086435', True, ['0'])
         except ValueError:
             self.fail("Student constructor raised a ValueError")
+
+    def test_get_gpa(self):
+        actual_gpa = self.testStudent3.get_gpa()
+        expected_gpa = 90
+        self.assertEqual(expected_gpa, actual_gpa)
+
+    def test_add_grade(self):
+        self.testStudent3.add_grade(50)
+        actual_grades = self.testStudent3.get_grades()
+        expected_grades = [90, 85, 95, 50]
+        self.assertEqual(actual_grades, expected_grades)

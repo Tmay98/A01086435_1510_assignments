@@ -3,6 +3,7 @@ from Student_Read_Write import print_class_average
 from unittest.mock import patch
 import io
 from Student import Student
+import os
 
 
 class TestPrint_class_average(TestCase):

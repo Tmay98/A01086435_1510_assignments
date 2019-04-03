@@ -2,6 +2,7 @@ from unittest import TestCase
 from unittest.mock import patch
 from Student_Updating import file_delete_student
 from Student import Student
+import os
 
 
 class TestFile_delete_student(TestCase):
@@ -21,6 +22,7 @@ class TestFile_delete_student(TestCase):
         with open('students.txt', 'r') as f_obj:
             actual_output = f_obj.read()
         self.assertEqual(expected_output, actual_output)
+        os.remove('students.txt')
 
     @patch('builtins.input', side_effect=['A59402346'])
     def test_student_not_found_returns_False(self, mock_input):
@@ -29,6 +31,7 @@ class TestFile_delete_student(TestCase):
             f_obj.write(str(self.testStudent2))
             students_list = [self.testStudent1, self.testStudent2]
         self.assertFalse(file_delete_student(students_list))
+        os.remove('students.txt')
 
     @patch('builtins.input', side_effect=['A01086435'])
     def test_student_found_returns_True(self, mock_input):
@@ -38,6 +41,7 @@ class TestFile_delete_student(TestCase):
             f_obj.write(str(self.testStudent2))
             students_list = [self.testStudent1, self.testStudent2]
         self.assertTrue(file_delete_student(students_list))
+        os.remove('students.txt')
 
     @patch('builtins.input', side_effect=['wefwefas'])
     def test_incorrect_student_number(self, mock_input):
