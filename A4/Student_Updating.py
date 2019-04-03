@@ -136,7 +136,7 @@ def check_valid_student_number(student_number):
     POSTCONDITION: raises ValueError if incorrect student number
     RETURN: True if correct student number
     """
-    if not student_number[0] == 'A' or not student_number[1:].isnumeric() or not len(student_number) == 9:
+    if student_number[0] != 'A' or not student_number[1:].isnumeric() or len(student_number) != 9:
         raise ValueError("You entered an incorrect student number")
     else:
         return True
