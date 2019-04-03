@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Read import file_read
+from Student_Read_Write import file_read
 import os
 from Student import Student
 

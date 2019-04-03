@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Read import print_class_average
+from Student_Read_Write import print_class_average
 from unittest.mock import patch
 import io
 from Student import Student
