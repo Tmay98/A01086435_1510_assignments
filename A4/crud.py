@@ -9,30 +9,6 @@ import Student_Updating
 import Student_Read_Write
 
 
-def check_valid_student_number(student_number):
-    if not student_number[0] == 'A' or not student_number[1:].isnumeric() or not len(student_number) == 9:
-        raise ValueError("You entered an incorrect student number")
-    else:
-        return True
-
-
-def convert_to_bool(status: str) -> bool:
-    """converts a string to a bool
-
-    PARAM: status a string
-    PRECONDITION: status must be a string
-    POSTCONDITION: status is converted to a bool
-    RETURN: the converted bool value
-    """
-    status = status.capitalize()
-    if status == 'True':
-        return True
-    elif status == 'False':
-        return False
-    else:
-        raise ValueError('You entered an incorrect status')
-
-
 def main():
     selection = 0
     students_list = []

@@ -1,7 +1,9 @@
-"""Module for printing info about students in students.txt"""
+"""Module for printing and reading info about students in students.txt"""
+
+# Tommy May
+# A01086435
 
 from Student import Student
-import crud
 
 
 def print_class_average(students_list):
@@ -70,7 +72,7 @@ def file_read():
             for line in f_obj:
                 if line != '\n':
                     line = line.split()
-                    line[3] = crud.convert_to_bool(line[3])
+                    line[3] = convert_to_bool(line[3])
                     students_list.append(Student(line[0], line[1], line[2], line[3], line[4:]))
     except FileNotFoundError:
         return []
@@ -89,7 +91,7 @@ def add_student(students_list: list):
     student_info = student_info.split()
     try:
         # converts status to a bool and tries to create a new student object
-        student_info[3] = crud.convert_to_bool(student_info[3])
+        student_info[3] = convert_to_bool(student_info[3])
         # raises an error if student number already exists
         check_if_student_number_exists(student_info[2], students_list)
         # creates new student object
@@ -123,3 +125,20 @@ def check_if_student_number_exists(student_number, students_list):
     for student in students_list:
         if student.get_student_number() == student_number:
             raise ValueError('A student with that student number already exists')
+
+
+def convert_to_bool(status: str) -> bool:
+    """converts a string to a bool
+
+    PARAM: status a string
+    PRECONDITION: status must be a string
+    POSTCONDITION: status is converted to a bool
+    RETURN: the converted bool value
+    """
+    status = status.capitalize()
+    if status == 'True':
+        return True
+    elif status == 'False':
+        return False
+    else:
+        raise ValueError('You entered an incorrect status')

@@ -1,4 +1,4 @@
-""" student class module"""
+"""student class module"""
 
 # Tommy May
 # A01086435

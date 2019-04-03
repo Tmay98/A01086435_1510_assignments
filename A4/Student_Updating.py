@@ -1,10 +1,7 @@
-"""Module for deleting a student from students.txt"""
+"""Module for updating / deleting students from students.txt and students list"""
 
 # Tommy May
 # A01086435
-
-import Student
-import crud
 
 
 def file_delete_student(students_list) -> bool:
@@ -17,7 +14,7 @@ def file_delete_student(students_list) -> bool:
     delete_student_number = input('Enter the student number of the student to be deleted\n')
     try:
         # checks if user input was a valid student number and raises an error if it is invalid
-        crud.check_valid_student_number(delete_student_number)
+        check_valid_student_number(delete_student_number)
         # deletes student from students_list. raises value error if no students exist
         delete_student_in_memory(students_list, delete_student_number)
     except ValueError as e:
@@ -25,6 +22,7 @@ def file_delete_student(students_list) -> bool:
         return False
     else:
         # rewrites students to students.txt with changes
+        print('Student deleted successfully')
         file_write_changes(students_list)
         return True
 
@@ -46,7 +44,7 @@ def edit_student_grades(students_list):
     student_number = input('Enter the student number of the student to add grades to\n')
     try:
         # checks if user input was a valid student number and raises an error if it is invalid
-        crud.check_valid_student_number(student_number)
+        check_valid_student_number(student_number)
         # returns index where student is in students_list
         student_location = find_student(student_number, students_list)
         # loops through asking user to input grades
@@ -94,3 +92,10 @@ def file_write_changes(students_list):
     with open('students.txt', 'w') as f_obj:
         for student in students_list:
             f_obj.write(str(student))
+
+
+def check_valid_student_number(student_number):
+    if not student_number[0] == 'A' or not student_number[1:].isnumeric() or not len(student_number) == 9:
+        raise ValueError("You entered an incorrect student number")
+    else:
+        return True
