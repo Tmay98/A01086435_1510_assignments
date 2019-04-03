@@ -4,10 +4,11 @@
 # A01086435
 
 import Student
+import crud
 
 
-def add_student():
-    """Creates a new student object and writes it to a file
+def add_student(students_list: list):
+    """Creates a new student object and writes it to students_list and students.txt
 
     POSTCONDITION: if no errors are found the new student object is added to students.txt
     """
@@ -17,7 +18,7 @@ def add_student():
     student_info = student_info.split()
     try:
         # converts status to a bool and tries to create a new student object
-        student_info[3] = convert_to_bool(student_info[3])
+        student_info[3] = crud.convert_to_bool(student_info[3])
         new_student = Student.Student(student_info[0], student_info[1],
                                       student_info[2], student_info[3], student_info[4:])
     except ValueError as e:
@@ -27,23 +28,7 @@ def add_student():
     else:
         # writes student to students.txt
         file_write(new_student)
-
-
-def convert_to_bool(status: str) -> bool:
-    """converts a string to a bool
-
-    PARAM: status a string
-    PRECONDITION: status must be a string
-    POSTCONDITION: status is converted to a bool
-    RETURN: the converted bool value
-    """
-    status = status.capitalize()
-    if status == 'True':
-        return True
-    elif status == 'False':
-        return False
-    else:
-        raise ValueError('You entered an incorrect status')
+        students_list.append(new_student)
 
 
 def file_write(student: Student):

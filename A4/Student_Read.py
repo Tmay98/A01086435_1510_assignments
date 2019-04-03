@@ -1,19 +1,21 @@
 """Module for printing info about students in students.txt"""
 
+from Student import Student
+import crud
 
-def print_class_average():
+
+def print_class_average(students_list):
     """Calculates class average and prints it
 
     POSTCONDITION: if there is 1 or more students calculate the class average and print it
     """
-    students_list = file_read()
-    # checks if file is empty
+    # returns None if no students are found
     if len(students_list) == 0:
         print('No students in file')
-        return
+        return None
     # calculate all students average individually and add them to student_average_list
-    student_average_list = calculate_students_average(students_list)
-    # calculates and prints all students combined average
+    student_average_list = calculate_each_students_average(students_list)
+    # calculates and prints all students combined average to 2 decimal points
     class_average = 0
     for average in student_average_list:
         class_average += int(average)
@@ -24,7 +26,7 @@ def print_class_average():
         print('No students with grades found')
 
 
-def calculate_students_average(students_list):
+def calculate_each_students_average(students_list):
     """Calculates all students averages and returns a list of them
 
     PARAM: students_list is a list
@@ -36,14 +38,11 @@ def calculate_students_average(students_list):
     student_average_list = []
     # calculates all students individual averages
     for i in range(0, len(students_list)):
-        student = students_list[i].split()
-        total_grades = 0
-        # checks if student has any grades
-        if len(student) > 4:
-            # calculates the average and appends it to students_average_list
-            for j in range(4, len(student)):
-                total_grades += int(student[j])
-            student_average_list.append(total_grades / (len(student) - 4))
+        try:
+            if students_list[i].get_gpa() != -1:
+                student_average_list.append(students_list[i].get_gpa())
+        except ValueError:
+            pass
     return student_average_list
 
 
@@ -64,19 +63,16 @@ def print_class_list():
         print('no students in file\n')
 
 
-def file_read() -> list:
-    """Reads students.txt file and returns it as a list
-
-    POSTCONDITION: students.txt is read and added to students_list
-    RETURN: list of all students or empty list if no students
-    """
+def file_read():
+    students_list = []
     try:
-        with open("students.txt") as f_obj:
-            students_list = f_obj.readlines()
+        with open('students.txt') as f_obj:
+            for line in f_obj:
+                if line != '\n':
+                    line = line.split()
+                    line[3] = crud.convert_to_bool(line[3])
+                    students_list.append(Student(line[0], line[1], line[2], line[3], line[4:]))
     except FileNotFoundError:
-        print('no students in file\n')
         return []
     else:
-        if len(students_list) > 0:
-            return students_list
-        return []
+        return students_list

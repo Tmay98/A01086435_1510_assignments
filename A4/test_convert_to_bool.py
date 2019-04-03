@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Student_Creation import convert_to_bool
+from crud import convert_to_bool
 
 
 class TestConvert_to_bool(TestCase):
