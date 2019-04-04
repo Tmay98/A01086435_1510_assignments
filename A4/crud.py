@@ -3,8 +3,6 @@
 # Tommy May
 # A01086435
 
-import Student_Read_Write
-import Student_Updating
 import Student_Updating
 import Student_Read_Write
 
