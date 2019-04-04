@@ -23,7 +23,7 @@ def print_class_average(students_list):
     # calculates and prints all students combined average to 2 decimal points
     class_average = 0
     for average in student_average_list:
-        class_average += int(average)
+        class_average += float(average)
     if student_average_list:
         class_average = round(class_average / len(student_average_list), 2)
         print("the class average is: %.2f%%\n" % class_average)

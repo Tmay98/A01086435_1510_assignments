@@ -47,7 +47,7 @@ class Student:
         total_grades = 0
         if len(self.grades) > 0:
             for i in range(0, len(self.grades)):
-                total_grades += int(self.grades[i])
+                total_grades += float(self.grades[i])
             return total_grades / len(self.grades)
         return -1
 
@@ -68,7 +68,7 @@ class Student:
 
     def check_valid_grades(self, grades):
         for grade in grades:
-            grade = int(grade)
+            grade = float(grade)
             if grade < 0 or grade > 100:
                 raise ValueError("You did not enter correct grades")
         return True

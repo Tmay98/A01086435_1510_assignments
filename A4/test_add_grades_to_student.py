@@ -8,7 +8,7 @@ import io
 class TestAdd_grades_to_student(TestCase):
 
     def setUp(self):
-        self.testStudent1 = Student('Tommy', 'May', 'A01086435', True, ['90'])
+        self.testStudent1 = Student('Tommy', 'May', 'A01086435', True, ['90.0'])
         self.testStudent2 = Student('Another', 'Person', 'A01086436', True, [])
 
     @patch('builtins.input', side_effect=['80', '85', '95', 'done'])
@@ -16,7 +16,7 @@ class TestAdd_grades_to_student(TestCase):
         students_list = [self.testStudent1]
         add_grades_to_student(0, students_list)
         actual_output = str(students_list[0])
-        expected_output = '\nTommy May A01086435 True 90 80 85 95'
+        expected_output = '\nTommy May A01086435 True 90.0 80.0 85.0 95.0'
         self.assertEqual(expected_output, actual_output)
 
     @patch('builtins.input', side_effect=['done'])
@@ -49,12 +49,3 @@ class TestAdd_grades_to_student(TestCase):
                           'All valid grades were added to the student\n'
         self.assertEqual(expected_output, actual_output)
 
-    @patch('builtins.input', side_effect=['10.5'])
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_float_input(self, mock_output, mock_input):
-        students_list = [self.testStudent1]
-        add_grades_to_student(0, students_list)
-        actual_output = mock_output.getvalue()
-        expected_output = 'non integer grade entered, exiting edit\n\n' \
-                          'All valid grades were added to the student\n'
-        self.assertEqual(expected_output, actual_output)
