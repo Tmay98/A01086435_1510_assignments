@@ -4,9 +4,22 @@
 # A01086435
 
 import math
+import doctest
 
 
 def sum_of_primes(number):
+    """ calculates the sum of all primes up to a given number
+
+    PARAM: number an int
+    PRECONDITION: number must be a positive int
+    POSTCONDITION: all prime numbers up to number are summed
+    RETURN: the sum of all prime numbers up to given number
+
+    >>> sum_of_primes(9)
+    17
+    >>> sum_of_primes(55)
+    381
+    """
     primes = []
     sum = 0
 
@@ -30,6 +43,7 @@ def sum_of_primes(number):
 
 
 def main():
+    doctest.testmod()
     print(sum_of_primes(9))
 
 
