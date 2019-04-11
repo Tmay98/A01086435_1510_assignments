@@ -1,10 +1,28 @@
-"""Base conversion function"""
+"""Base conversion function to convert from one base to another"""
 
 # Tommy May
 # A01086435
 
+import doctest
+
 
 def base_conversion(base_from, number: int, base_to):
+    """ Converts a number from one base to another
+
+    PARAM: base_from an int
+    PRECONDITION: base_from must be an int between 2 and 10
+    PARAM: number an int
+    PRECONDITION: number must be a positive integer
+    PARAM: base_to an int
+    PRECONDITION: base_to must be an int between 2 and 10
+    POSTCONDITION: number is converted to desired base
+    RETURN: number in desired base
+
+    >>> base_conversion(10, 256, 2)
+    100000000
+    >>> base_conversion(2, 100000000, 10)
+    256
+    """
     base_10_number = 0
     digits_list = [int(digit) for digit in str(number)]
     converted_number_list = []
@@ -24,6 +42,7 @@ def base_conversion(base_from, number: int, base_to):
 
 
 def main():
+    doctest.testmod()
     print(base_conversion(10, 256, 2))
 
 
