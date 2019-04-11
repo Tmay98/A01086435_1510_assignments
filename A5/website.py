@@ -1,4 +1,4 @@
-"""Website function"""
+"""Website function creates an html page with a link to Nasa image of the day"""
 
 # Tommy May
 # A01086435
@@ -6,7 +6,12 @@
 import requests, json
 
 
-def website(url):
+def website():
+    """ Creates an html page with a link to Nasa image of the day
+
+    POSTCONDITION: an html page called index is created with a link to Nasa image of the day
+    """
+    url = 'https://api.nasa.gov/planetary/apod?api_key=tubHcfkXSjslikbUgyI8vmuOCcIQG9vmwnFAejSM'
     response = requests.get(url)
     response.raise_for_status()
     nasa_info = json.loads(response.text)
@@ -36,8 +41,7 @@ def website(url):
 
 
 def main():
-    url = 'https://api.nasa.gov/planetary/apod?api_key=tubHcfkXSjslikbUgyI8vmuOCcIQG9vmwnFAejSM'
-    website(url)
+    website()
 
 
 if __name__ == "__main__":

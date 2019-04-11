@@ -1,10 +1,16 @@
-"""backup function"""
+""" Backup function to create a backup of a file """
 
 # Tommy May
 # A01086435
 
 
 def backup(filename):
+    """ Creates a backup of the given file
+
+    PARAM: filename a string
+    PRECONDITION: filename must be a string of a filename
+    POSTCONDITION: the file is copied to a .bak file of the same name
+    """
     try:
         with open(filename) as f_obj:
             contents = f_obj.read()
