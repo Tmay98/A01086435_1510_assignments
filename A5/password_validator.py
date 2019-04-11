@@ -1,12 +1,25 @@
-"""Password validator function"""
+"""Password validator function to check if a password is strong"""
 
 # Tommy May
 # A01086435
 
 import re
+import doctest
 
 
-def password_validator(password):
+def password_validator(password: str):
+    """ checks if a password contains upper and lowercase letters, a number, and is at least 8 characters long
+
+    PARAM: password a string
+    PRECONDITION: password must be a string
+    POSTCONDITION: checks if the password is strong enough
+    RETURN: False if password not strong, True if it is strong
+
+    >>> password_validator('geefgG23f')
+    True
+    >>> password_validator('badpassword')
+    False
+    """
 
     length_regex = re.compile(r'.{8,}')
     upper_case_regex = re.compile(r'.*[A-Z].*')
@@ -25,6 +38,7 @@ def password_validator(password):
 
 
 def main():
+    doctest.testmod()
     print(password_validator('helG4'))
 
 
