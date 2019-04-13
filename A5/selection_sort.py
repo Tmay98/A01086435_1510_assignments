@@ -45,7 +45,6 @@ def main():
     doctest.testmod()
     print(selection_sort(['c', 'a', 'd', 'g', 'b', 'l']))
     print(selection_sort([1, 5, 2, 7, 15, 3]))
-    
     try:
         selection_sort([])
     except TypeError as e:
