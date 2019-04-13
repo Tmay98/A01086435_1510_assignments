@@ -16,7 +16,7 @@ def base_conversion(base_from, number: int, base_to):
     PARAM: base_to an int
     PRECONDITION: base_to must be an int between 2 and 10
     POSTCONDITION: number is converted to desired base
-    RETURN: number in desired base
+    RETURN: number in desired base, -1 if error
 
     >>> base_conversion(10, 256, 2)
     100000000
@@ -29,6 +29,9 @@ def base_conversion(base_from, number: int, base_to):
 
     # convert number to base 10
     for i in range(len(digits_list)):
+        # returns -1 if a digit greater than the entered base is entered
+        if digits_list[i] >= base_from:
+            return -1
         base_10_number += digits_list[len(digits_list) - 1 - i] * base_from ** i
 
     # converts number to desired base from base 10
