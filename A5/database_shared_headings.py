@@ -18,10 +18,14 @@ def database_shared_headings(database: dict):
     }, 'person2' : {'surname': 'dsfsd', 'name': 'sdfsd', 'notes': 'sdfs', 'author': 'sdfsd'}})
     ['surname', 'name', 'notes']
     """
+    # creates a list of all keys from 1 sub dictionary
+    starting_keys = list(list(database.values())[0].keys())
+    # creates a copy to remove keys not in other dictionaries
     like_keys = list(list(database.values())[0].keys())
+
     for sub_dict in database.values():
         sub_dict_keys = sub_dict.keys()
-        for key in like_keys:
+        for key in starting_keys:
             if key not in sub_dict_keys:
                 like_keys.remove(key)
     return like_keys
