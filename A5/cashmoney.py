@@ -6,7 +6,7 @@
 import doctest
 
 
-def cashmoney(amount: float):
+def cashmoney(amount: float) -> dict:
     """Converts an amount of money to its smallest amount of bills and coins
 
     PARAM: amount a float
@@ -17,6 +17,10 @@ def cashmoney(amount: float):
     >>> cashmoney(265.52)
     {100: 2, 50: 1, 20: 0, 10: 1, 5: 1, 2: 0, 1: 0, 0.25: 2, 0.1: 0, 0.05: 0, 0.01: 2}
     """
+    # raises ValueError if non-positive float entered
+    if amount <= 0:
+        raise ValueError('you did not enter a positive float')
+
     breakdown_dict = {100: 0, 50: 0, 20: 0, 10: 0, 5: 0, 2: 0, 1: 0, 0.25: 0, 0.10: 0, 0.05: 0, 0.01: 0}
     for key in breakdown_dict.keys():
         breakdown_dict[key] = int(amount // key)
@@ -26,7 +30,7 @@ def cashmoney(amount: float):
 
 def main():
     doctest.testmod()
-    print(cashmoney(265.27))
+    print(cashmoney(123))
 
 
 if __name__ == "__main__":
