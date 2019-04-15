@@ -7,7 +7,7 @@ import doctest
 from collections.abc import Sequence
 
 
-def selection_sort(unsorted_list):
+def selection_sort(unsorted_list) -> list:
     """Sorts a list of sortable items from lowest to highest
 
     PARAM: unsorted_list a list

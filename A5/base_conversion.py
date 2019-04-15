@@ -6,7 +6,7 @@
 import doctest
 
 
-def base_conversion(base_from, number: int, base_to):
+def base_conversion(base_from, number: int, base_to) -> int:
     """ Converts a number from one base to another
 
     PARAM: base_from an int

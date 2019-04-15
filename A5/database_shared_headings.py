@@ -6,7 +6,7 @@
 import doctest
 
 
-def database_shared_headings(database: dict):
+def database_shared_headings(database: dict) -> list:
     """ Shows what keys are shared by all dictionaries inside a dictionary
 
     PARAM: database a dictionary

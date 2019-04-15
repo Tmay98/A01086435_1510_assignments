@@ -7,7 +7,7 @@ import math
 import doctest
 
 
-def sum_of_primes(number):
+def sum_of_primes(number) -> int:
     """ calculates the sum of all primes up to a given number
 
     PARAM: number an int

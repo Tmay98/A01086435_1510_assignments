@@ -7,7 +7,7 @@ from math import floor
 import doctest
 
 
-def gcd(a: int, b: int):
+def gcd(a: int, b: int) -> int:
     """ Calculates the gcd of 2 integers
 
     PARAM: a an int

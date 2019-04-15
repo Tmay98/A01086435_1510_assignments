@@ -7,7 +7,7 @@ import re
 import doctest
 
 
-def password_validator(password: str):
+def password_validator(password: str) -> bool:
     """ checks if a password contains upper and lowercase letters, a number, and is at least 8 characters long
 
     PARAM: password a string
