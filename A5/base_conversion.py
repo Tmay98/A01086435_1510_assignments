@@ -39,6 +39,7 @@ def base_conversion(base_from, number: int, base_to) -> int:
         converted_number_list.append(base_10_number % base_to)
         base_10_number = base_10_number // base_to
     converted_number_list.reverse()
+
     # converts list to string and makes it an integer
     converted_number = int(''.join(str(i) for i in converted_number_list))
     return converted_number

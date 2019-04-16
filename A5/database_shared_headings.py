@@ -22,9 +22,10 @@ def database_shared_headings(database: dict) -> list:
     starting_keys = list(list(database.values())[0].keys())
     # creates a copy to remove keys not in other dictionaries
     like_keys = list(list(database.values())[0].keys())
-
+    # loops through all sub dictionaries
     for sub_dict in database.values():
         sub_dict_keys = sub_dict.keys()
+        # checks for like keys and removes them from the like_keys list
         for key in starting_keys:
             if key not in sub_dict_keys:
                 like_keys.remove(key)

@@ -32,9 +32,9 @@ def selection_sort(unsorted_list) -> list:
     sorted_list = []
     length = len(unsorted_list)
     for i in range(length):
-        temp = unsorted_list[0]
+        temp = unsorted_list[0]  # creates a temporary variable of the first element in unsorted list
         for j in range(len(unsorted_list)):
-            if unsorted_list[j] < temp:
+            if unsorted_list[j] < temp:  # if the next element in the unsorted list is smaller replace temp with it
                 temp = unsorted_list[j]
         sorted_list.append(temp)
         unsorted_list.remove(temp)

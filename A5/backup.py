@@ -8,7 +8,7 @@ def backup(filename):
     """ Creates a backup of the given file
 
     PARAM: filename a string
-    PRECONDITION: filename must be a string of a filename
+    PRECONDITION: filename must be a string of a .txt filename
     POSTCONDITION: the file is copied to a .bak file of the same name
     """
     try:
@@ -17,6 +17,7 @@ def backup(filename):
     except FileNotFoundError:
         print('File not found')
     else:
+        # takes file name given and creates same file with .bak
         backup_filename = filename[:-4] + '.bak'
         with open(backup_filename, 'w') as f_obj:
             f_obj.write(contents)

@@ -20,8 +20,9 @@ def cashmoney(amount: float) -> dict:
     # raises ValueError if non-positive float entered
     if amount <= 0:
         raise ValueError('you did not enter a positive float')
-
+    # creates initial breakdown dictionary
     breakdown_dict = {100: 0, 50: 0, 20: 0, 10: 0, 5: 0, 2: 0, 1: 0, 0.25: 0, 0.10: 0, 0.05: 0, 0.01: 0}
+    # calculates the amount of each key in the dictionary there are from value given
     for key in breakdown_dict.keys():
         breakdown_dict[key] = int(amount // key)
         amount = round(amount % key, 2)
